@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Meus Boletos{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Título Principal -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary"><i class="fas fa-file-invoice-dollar"></i> Gerenciador de Boletos</h2>
+        <p class="text-muted fs-5">Acompanhe todos os seus boletos em um só lugar.</p>
+    </div>
+
+    <!-- Tabela de Boletos -->
+    {% if boletos %}
+        <div class="table-responsive">
+            <table class="table table-hover shadow-sm rounded">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Valor</th>
+                        <th>Vencimento</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for boleto in boletos %}
+                    <tr class="align-middle">
+                        <td>R$ {{ boleto.valor|floatformat:2 }}</td>
+                        <td>
+                            {% if boleto.vencimento %}
+                                {{ boleto.vencimento|date:"dd/mm/yyyy" }}
+                            {% else %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if boleto.status == "pago" %}
+                                <span class="badge bg-success"><i class="fas fa-check-circle"></i> Pago</span>
+                            {% elif boleto.status == "pendente" %}
+                                <span class="badge bg-warning text-dark"><i class="fas fa-clock"></i> Pendente</span>
+                            {% else %}
+                                <span class="badge bg-danger"><i class="fas fa-times-circle"></i> Vencido</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'detalhar_boleto' boleto.id %}" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fas fa-eye"></i> Ver
+                            </a>
+                            <a href="{% url 'gerar_boleto' boleto.id %}" class="btn btn-success btn-sm" target="_blank">
+                                <i class="fas fa-download"></i> Baixar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-4" role="alert">
+            <i class="fas fa-info-circle"></i> Nenhum boleto encontrado.
+        </div>
+    {% endif %}
+
+    <!-- Ações do Usuário -->
+    <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
+        <form action="{% url 'dashboard' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Voltar ao Início
+            </button>
+        </form>
+
+        <form action="{% url 'logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Estilo Personalizado -->
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    .alert {
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .d-md-flex {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}

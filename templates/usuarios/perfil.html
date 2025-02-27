@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4 shadow-lg rounded w-50" style="background: #f9f9f9;">
+        <h2 class="text-center fw-bold mb-4 text-primary"><i class="fas fa-user-circle fa-2x"></i><br>Meu Perfil</h2>
+
+        <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong><i class="fas fa-user"></i> Nome de usuário:</strong> {{ user.username }}
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong><i class="fas fa-envelope"></i> Email:</strong> {{ user.email }}
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong><i class="fas fa-id-card"></i> CPF:</strong> {{ user.cpf }}
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong><i class="fas fa-phone"></i> Telefone:</strong> {{ user.telefone }}
+            </li>
+        </ul>
+
+        <div class="mb-3">
+            {% if user.documento %}
+                <a href="{{ user.documento.url }}" class="btn btn-outline-primary w-100 mb-2">
+                    <i class="fas fa-file-alt"></i> Baixar Documento
+                </a>
+            {% endif %}
+
+            {% if user.contrato %}
+                <a href="{{ user.contrato.url }}" class="btn btn-outline-secondary w-100 mb-2">
+                    <i class="fas fa-file-contract"></i> Baixar Contrato
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="d-grid gap-2">
+            <a href="{% url 'editar_perfil' %}" class="btn btn-success">
+                <i class="fas fa-edit"></i> Editar Perfil
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-dark">
+                <i class="fas fa-arrow-left"></i> Voltar para o Início
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .btn-outline-primary:hover, .btn-outline-secondary:hover, .btn-success:hover, .btn-outline-dark:hover {
+        transform: scale(1.02);
+    }
+</style>
+{% endblock %}

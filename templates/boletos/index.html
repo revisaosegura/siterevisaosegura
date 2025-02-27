@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciador de Boletos{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Título Principal -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary"><i class="fas fa-wallet"></i> Gerenciador de Boletos</h2>
+        <p class="text-muted fs-5">Visualize, gere e acompanhe seus boletos de forma simples e rápida.</p>
+    </div>
+
+    <!-- Cartões -->
+    <div class="row g-4 justify-content-center">
+        <!-- Cartão: Listar Boletos -->
+        <div class="col-md-5">
+            <div class="card shadow-lg p-4 text-center border-0 h-100" style="border-radius: 15px;">
+                <div class="card-body">
+                    <h5 class="fw-bold text-dark"><i class="fas fa-file-invoice-dollar fa-2x text-primary mb-3"></i><br>Meus Boletos</h5>
+                    <p class="text-muted">Acesse todos os boletos gerados, acompanhe o status e baixe quando necessário.</p>
+                    <a href="{% url 'listar_boletos' %}" class="btn btn-primary w-100">
+                        <i class="fas fa-list"></i> Listar Boletos
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cartão: Gerar Novo Boleto -->
+        <div class="col-md-5">
+            <div class="card shadow-lg p-4 text-center border-0 h-100" style="border-radius: 15px;">
+                <div class="card-body">
+                    <h5 class="fw-bold text-dark"><i class="fas fa-plus-circle fa-2x text-success mb-3"></i><br>Gerar Novo Boleto</h5>
+                    <p class="text-muted">Crie um novo boleto em poucos cliques e acompanhe os pagamentos facilmente.</p>
+                    <a href="{% url 'gerar_boleto' %}" class="btn btn-success w-100">
+                        <i class="fas fa-plus"></i> Gerar Boleto
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilo Personalizado -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+{% endblock %}

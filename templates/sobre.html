@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre Nós - Revisão Segura{% endblock %}
+
+{% block content %}
+<!-- Seção Hero com Banner -->
+<div class="hero bg-dark text-white text-center py-5" style="background: url('/static/images/about_banner.jpg') center/cover no-repeat; height: 300px; display: flex; align-items: center; justify-content: center;">
+    <h1 class="fw-bold text-shadow">Quem Somos</h1>
+</div>
+
+<div class="container mt-5">
+    <!-- Seção Principal -->
+    <div class="row align-items-center">
+        <div class="col-md-5">
+            <h2 class="fw-bold">Nossa Missão</h2>
+            <p class="lead">
+                A <strong>Revisão Segura</strong> nasceu com um propósito claro: proteger consumidores contra abusos financeiros.  
+                Nossa equipe de especialistas auxilia pessoas na recuperação de valores cobrados indevidamente em financiamentos, 
+                empréstimos e contratos bancários.
+            </p>
+            <p>
+                Sabemos que milhares de brasileiros são vítimas de juros abusivos diariamente.  
+                Nossa missão é trazer <strong>justiça financeira</strong> para cada um deles.  
+                Com experiência no setor jurídico e financeiro, revisamos contratos e identificamos cobranças indevidas, garantindo que nossos clientes <strong>não paguem além do que é justo.</strong>
+            </p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="/static/images/about_us.jpg" alt="Sobre Nós" class="img-fluid rounded shadow-lg">
+        </div>
+    </div>
+
+<!-- Seção História da Empresa -->
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <!-- Coluna da Imagem -->
+        <div class="col-md-6 text-center">
+            <img src="/static/images/history.jpg" alt="Nossa História" class="img-fluid rounded shadow-lg" style="max-width: 70%; height: auto;">
+        </div>
+        
+        <!-- Coluna do Texto -->
+        <div class="col-md-6">
+            <h2 class="fw-bold">Nossa História</h2>
+            <p class="text-muted">Como tudo começou...</p>
+            <p>
+                Tudo começou quando um de nossos fundadores, um advogado especializado em direito do consumidor, percebeu que 
+                <strong>milhares de pessoas estavam sendo enganadas</strong> por taxas e juros abusivos sem sequer perceberem.  
+                Ele decidiu que era hora de agir.
+            </p>
+            <p>
+                Com um time altamente qualificado, desenvolvemos um processo eficiente e transparente para revisar contratos bancários e 
+                <strong>recuperar o dinheiro dos clientes.</strong>
+            </p>
+            <p class="fw-bold text-success">
+                Desde então, já ajudamos milhares de brasileiros a reverter cobranças indevidas e economizar milhões de reais.
+            </p>
+        </div>
+    </div>
+</div>
+
+    <!-- Seção Diferenciais -->
+    <div class="mt-5 text-center">
+        <h2 class="fw-bold">Por Que Escolher a Revisão Segura?</h2>
+        <p class="text-muted">Oferecemos um serviço confiável e transparente para proteger seu dinheiro.</p>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <img src="/static/images/expertise.jpg" alt="Especialistas" class="img-fluid rounded-circle mb-3">
+                    <h5 class="fw-bold">Equipe Especializada</h5>
+                    <p>Profissionais altamente qualificados em direito bancário e financeiro.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <img src="/static/images/success.jpg" alt="Casos de Sucesso" class="img-fluid rounded-circle mb-3">
+                    <h5 class="fw-bold">Casos de Sucesso</h5>
+                    <p>Já recuperamos milhões de reais para nossos clientes.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <img src="/static/images/trust.jpg" alt="Atendimento Personalizado" class="img-fluid rounded-circle mb-3">
+                    <h5 class="fw-bold">Atendimento Personalizado</h5>
+                    <p>Cada caso é tratado com total dedicação e compromisso.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão de Fale Conosco -->
+    <div class="text-center mt-5">
+        <a href="/contato/" class="btn btn-success btn-lg fw-bold shadow"><i class="fas fa-comments"></i> Fale Conosco</a>
+    </div>
+</div>
+{% endblock %}

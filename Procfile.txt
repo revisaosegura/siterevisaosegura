@@ -1,0 +1,1 @@
+web: gunicorn revisao_segura.wsgi

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4 shadow-lg rounded w-50" style="background: #f8f9fa;">
+        <h2 class="text-center fw-bold mb-3 text-primary">Editar Perfil</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Mensagens de Sucesso ou Erro -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} text-center" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Campos do Perfil -->
+            {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold"><i class="fas fa-user-edit"></i> {{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <!-- Separador -->
+            <hr class="my-4">
+
+            <!-- Campos de Alteração de Senha -->
+            <h4 class="mt-4 text-secondary"><i class="fas fa-key"></i> Alterar Senha</h4>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-lock"></i> Senha Atual</label>
+                <input type="password" name="senha_atual" class="form-control" placeholder="Digite sua senha atual">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-lock"></i> Nova Senha</label>
+                <input type="password" name="nova_senha" class="form-control" placeholder="Digite a nova senha">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-lock"></i> Confirme a Nova Senha</label>
+                <input type="password" name="confirmar_senha" class="form-control" placeholder="Confirme a nova senha">
+            </div>
+
+            <!-- Botão Salvar -->
+            <button type="submit" class="btn btn-success w-100 shadow-sm">
+                <i class="fas fa-save"></i> Salvar Alterações
+            </button>
+        </form>
+
+        <!-- Links de Navegação -->
+        <div class="text-center mt-4">
+            <a href="{% url 'perfil' %}" class="btn btn-outline-primary"><i class="fas fa-user"></i> Voltar para o Perfil</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-dark"><i class="fas fa-home"></i> Voltar para o Início</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

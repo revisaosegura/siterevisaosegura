@@ -1,0 +1,4 @@
+// Exibe uma mensagem no console quando a página é carregada
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("Site carregado com sucesso!");
+});

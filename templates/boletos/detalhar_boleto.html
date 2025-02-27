@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhes do Boleto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Título -->
+    <h2 class="fw-bold text-center text-primary"><i class="fas fa-file-invoice-dollar"></i> Detalhes do Boleto</h2>
+
+    <!-- Cartão com Detalhes do Boleto -->
+    <div class="card shadow-lg p-4 mt-4 border-0" style="border-radius: 12px; background-color: #f8f9fa;">
+          <p><strong><i class="fas fa-dollar-sign"></i> Valor:</strong> R$ {{ boleto.valor|floatformat:2 }}</p>
+        <p><strong><i class="fas fa-calendar-alt"></i> Vencimento:</strong> {{ boleto.vencimento|date:"" }}</p>
+
+        <p><strong><i class="fas fa-info-circle"></i> Status:</strong> 
+            {% if boleto.status == "pago" %}
+                <span class="badge bg-success"><i class="fas fa-check-circle"></i> Pago</span>
+            {% elif boleto.status == "pendente" %}
+                <span class="badge bg-warning text-dark"><i class="fas fa-clock"></i> Pendente</span>
+            {% else %}
+                <span class="badge bg-danger"><i class="fas fa-times-circle"></i> Vencido</span>
+            {% endif %}
+        </p>
+
+        <!-- Link para Baixar Boleto -->
+        {% if boleto.arquivo %}
+            <a href="{{ boleto.arquivo.url }}" class="btn btn-success mt-4 w-100" target="_blank">
+                <i class="fas fa-download"></i> Baixar Boleto
+            </a>
+        {% else %}
+            <div class="alert alert-danger mt-4 text-center" role="alert">
+                <i class="fas fa-exclamation-triangle"></i> Boleto não disponível para download.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Botão Voltar -->
+    <div class="text-center mt-4">
+        <a href="{% url 'listar_boletos' %}" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left"></i> Voltar para Lista de Boletos
+        </a>
+    </div>
+</div>
+
+<!-- Estilização Customizada -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+    .btn:hover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

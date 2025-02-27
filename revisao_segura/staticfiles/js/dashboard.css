@@ -1,0 +1,9 @@
+// Função para mostrar um alerta ao clicar no botão "Gerar Boleto"
+document.addEventListener("DOMContentLoaded", function() {
+    let botaoGerar = document.getElementById("btn-gerar-boleto");
+    if (botaoGerar) {
+        botaoGerar.addEventListener("click", function() {
+            alert("Boleto gerado com sucesso!");
+        });
+    }
+});
