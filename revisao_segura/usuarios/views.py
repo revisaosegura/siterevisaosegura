@@ -150,7 +150,3 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-def delete_all_users(request):
-    User.objects.all().delete()
-    return HttpResponse("Todos os usuários foram excluídos com sucesso!")
-
