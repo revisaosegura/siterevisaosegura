@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from revisao_segura.usuarios.views import cadastro, login_view, dashboard, logout_view, perfil, editar_perfil, upload_documento, enviar_documento_cliente, excluir_documento  # 🔹 Correção da importação
+from .views import reset_superuser_password
 
 urlpatterns = [
     path('cadastro/', cadastro, name='cadastro'),
@@ -18,4 +19,5 @@ urlpatterns = [
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='usuarios/reset_password_complete.html'), name='password_reset_complete'),
     path('password_change/', auth_views.PasswordChangeView.as_view(template_name='registration/password_change_form.html'), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html'), name='password_change_done'),
+    path("reset-password/", reset_superuser_password),
 ]

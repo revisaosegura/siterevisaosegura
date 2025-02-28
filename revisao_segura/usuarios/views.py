@@ -148,3 +148,9 @@ def excluir_documento(request, documento_id):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def reset_superuser_password(request):
+    user = User.objects.get(username="revisaosegura")  # Substitua pelo nome de usuário correto
+    user.set_password("Revisaosegura.2025")  # Escolha uma senha forte
+    user.save()
+    return HttpResponse("Senha redefinida com sucesso!")
