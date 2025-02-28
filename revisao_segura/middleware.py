@@ -9,3 +9,4 @@ class WWWRedirectMiddleware:
         if host == "revisaosegura.com.br":
             return HttpResponsePermanentRedirect("https://www.revisaosegura.com.br" + request.get_full_path())
         return self.get_response(request)
+ 
