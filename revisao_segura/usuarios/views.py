@@ -9,6 +9,7 @@ from .forms import PerfilForm
 from .forms import DocumentoClienteForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.http import HttpResponse
 
 def cadastro(request):
     if request.method == 'POST':
@@ -154,3 +155,10 @@ def reset_superuser_password(request):
     user.set_password("Revisaosegura.2025")  # Escolha uma senha forte
     user.save()
     return HttpResponse("Senha redefinida com sucesso!")
+
+def create_admin_user(request):
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser("revisaosegura", "admin@revisaosegura.com.br", "Adminrevisao.2025")
+        return HttpResponse("Superusuário criado com sucesso!")
+    else:
+        return HttpResponse("Superusuário já existe.")
