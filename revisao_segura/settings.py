@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
 # Middlewares
 MIDDLEWARE = [
+    "revisao_segura.middleware.WWWRedirectMiddleware",  # Adicione essa linha
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Adicione esta linha
 ]
 
 # Configuração de URLs
@@ -152,6 +154,7 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',
@@ -168,9 +171,4 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-    MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Adicione esta linha
-    "django.contrib.sessions.middleware.SessionMiddleware",
-]
-
+ 
