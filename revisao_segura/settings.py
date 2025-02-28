@@ -1,7 +1,7 @@
 import os
+import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
-import dj_database_url
 
 # Diretório base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,9 +68,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'revisao_segura.wsgi.application'
 
 # Configuração do banco de dados (SQLite)
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
-}
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',  # Correção do caminho
+        }
+    }
 
 # Configuração de autenticação e senhas
 AUTH_PASSWORD_VALIDATORS = [
@@ -100,7 +110,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = str(BASE_DIR / 'staticfiles')  # Convertendo para string
 
 # Configuração de arquivos de mídia (uploads de documentos e contratos)
 MEDIA_URL = '/media/'
