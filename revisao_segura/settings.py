@@ -13,7 +13,11 @@ SECRET_KEY = 'Revisaosegura.2025'
 DEBUG = True
 
 # Hosts permitidos
-ALLOWED_HOSTS = ['127.0.0.1', 'revisaosegura.com.br']
+ALLOWED_HOSTS = [
+    "siterevisaosegura.onrender.com",  # Domínio do Render
+    "127.0.0.1",  # Para testes locais
+    "localhost"   # Para rodar localmente
+]
 APPEND_SLASH = True
 
 # Aplicações instaladas
