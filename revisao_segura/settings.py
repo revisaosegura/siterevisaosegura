@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'revisao_segura.wsgi.application'
 
 # Configuração do banco de dados (SQLite)
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL", "sqlite:///db.sqlite3"))
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
 # Configuração de autenticação e senhas
