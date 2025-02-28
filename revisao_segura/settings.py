@@ -17,6 +17,8 @@ ALLOWED_HOSTS = [
     "siterevisaosegura.onrender.com",  # Domínio do Render
     "127.0.0.1",  # Para testes locais
     "localhost"   # Para rodar localmente
+    "revisaosegura.com.br",
+    "www.revisaosegura.com.br",
 ]
 APPEND_SLASH = True
 
@@ -148,6 +150,7 @@ GERENCIANET_CREDENTIALS = {
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
 
 MESSAGE_TAGS = {
