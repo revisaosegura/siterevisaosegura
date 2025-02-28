@@ -15,5 +15,8 @@ class Boleto(models.Model):
     def __str__(self):
         return f"Boleto de R$ {self.valor} - Vencimento: {self.vencimento}"
 
-for boleto in Boleto.objects.all():
-    print(f"Valor: {boleto.valor}, Vencimento: {boleto.data_vencimento}, Status: {boleto.status}")
+def processar_boletos():
+    from boletos.models import Boleto  # Importação dentro da função
+    boletos = Boleto.objects.all()
+    for boleto in boletos:
+        print(boleto)
