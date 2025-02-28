@@ -7,13 +7,13 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Chave secreta do Django
-SECRET_KEY = 'sua_chave_secreta_aqui'
+SECRET_KEY = 'Revisaosegura.2025'
 
 # Ativar modo de depuração (Apenas para desenvolvimento)
 DEBUG = True
 
 # Hosts permitidos
-ALLOWED_HOSTS = ['revisaosegura.com.br', '.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'revisaosegura.com.br']
 APPEND_SLASH = True
 
 # Aplicações instaladas
@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'revisao_segura.wsgi.application'
 
 # Configuração do banco de dados (SQLite)
 DATABASES = {
-    'default': revisao_segura_database_url.config(default=os.getenv("DATABASE_URL"))
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL", "sqlite:///db.sqlite3"))
 }
 
 # Configuração de autenticação e senhas
@@ -150,3 +150,10 @@ if DEBUG:
     ]
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Adicione esta linha
+    "django.contrib.sessions.middleware.SessionMiddleware",
+]
+
