@@ -171,4 +171,5 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
- 
+    # Alteração forçada para deploy
+
