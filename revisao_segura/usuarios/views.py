@@ -157,7 +157,7 @@ def reset_superuser_password(request):
     return HttpResponse("Senha redefinida com sucesso!")
 
 def create_admin_user(request):
-    if not User.objects.filter(username="admin").exists():
+    if not User.objects.filter(username="revisaosegura").exists():
         User.objects.create_superuser("revisaosegura", "admin@revisaosegura.com.br", "Adminrevisao.2025")
         return HttpResponse("Superusuário criado com sucesso!")
     else:
