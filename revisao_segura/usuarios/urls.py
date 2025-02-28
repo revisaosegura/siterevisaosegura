@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from revisao_segura.usuarios.views import cadastro, login_view, dashboard, logout_view, perfil, editar_perfil, upload_documento, enviar_documento_cliente, excluir_documento  # 🔹 Correção da importação
 from .views import reset_superuser_password
+from .views import create_admin_user  # Certifique-se de importar corretamente!
 
 urlpatterns = [
     path('cadastro/', cadastro, name='cadastro'),
