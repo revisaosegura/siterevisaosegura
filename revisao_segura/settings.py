@@ -13,13 +13,11 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback_key_should_be_removed")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # Hosts permitidos
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
-[
-    "siterevisaosegura.onrender.com",  # Domínio do Render
-    "127.0.0.1",  # Para testes locais
-    "localhost"   # Para rodar localmente
-    "revisaosegura.com.br",
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
     "www.revisaosegura.com.br",
+    "revisaosegura.com.br",
 ]
 APPEND_SLASH = True
 
