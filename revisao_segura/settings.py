@@ -82,7 +82,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.config(default=DATABASE_URL)
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
     }
 else:
     DATABASES = {
@@ -178,5 +178,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Usa banco de dados par
 SESSION_COOKIE_SECURE = False  # Se estiver em HTTPS
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_AGE = 86400
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
