@@ -17,18 +17,19 @@ django.setup()
 
 from django.contrib.auth import get_user_model
 
-def create_default_superuser():
+def reset_admin_password():
     User = get_user_model()
-    username = os.getenv("DJANGO_SUPERUSER_USERNAME", "revisaosegura")
-    email = os.getenv("DJANGO_SUPERUSER_EMAIL", "segurarevisao@gmail.com")
-    password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "Admin.2025")
+    username = "revisaosegura"  # Substitua pelo seu usuário admin
+    new_password = "Admin.2025"  # Nova senha
 
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username=username, email=email, password=password)
-        print(f"Superusuário '{username}' criado com sucesso!")
-    else:
-        print(f"Superusuário '{username}' já existe.")
+    try:
+        user = User.objects.get(username=username)
+        user.set_password(new_password)
+        user.save()
+        print(f"Senha do superusuário '{username}' foi redefinida com sucesso!")
+    except User.DoesNotExist:
+        print(f"O usuário '{username}' não existe.")
 
-create_default_superuser()
+reset_admin_password()
 
 application = get_wsgi_application()
