@@ -7,7 +7,7 @@ from django.contrib.messages import constants as messages
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Chave secreta do Django
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback_key")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback_key_should_be_removed")
 
 # Ativar modo de depuração (Apenas para desenvolvimento)
 DEBUG = os.getenv("DEBUG", "False") == "True"
