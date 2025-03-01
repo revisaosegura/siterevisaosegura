@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django_extensions",
-
-   
+    'app',  # Certifique-se de que seu app está listado aqui!
+  
     # Aplicativos internos
     'revisao_segura.usuarios',  # ⚠️ Certifique-se de que está assim!
     'revisao_segura.boletos',
