@@ -2,6 +2,7 @@ import os
 import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from django.contrib.auth import get_user_model
 
 # Diretório base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -181,4 +182,17 @@ SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_AGE = 86400
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
+def create_default_superuser():
+    User = get_user_model()
+    username = os.getenv("DJANGO_SUPERUSER_USERNAME", "revisaosegura")
+    email = os.getenv("DJANGO_SUPERUSER_EMAIL", "segurarevisao@gmail.com")
+    password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "Admin.2025")
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username=username, email=email, password=password)
+        print(f"Superusuário '{username}' criado com sucesso!")
+    else:
+        print(f"Superusuário '{username}' já existe.")
+
+create_default_superuser()
 
