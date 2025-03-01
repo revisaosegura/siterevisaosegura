@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django_extensions",
+
    
     # Aplicativos internos
     'revisao_segura.usuarios',  # ⚠️ Certifique-se de que está assim!
@@ -155,7 +157,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CSRF_TRUSTED_ORIGINS = ['https://siterevisaosegura.onrender.com']
+CSRF_TRUSTED_ORIGINS = ["https://www.revisaosegura.com.br", 'https://siterevisaosegura.onrender.com']
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',
@@ -172,5 +174,9 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-    # Alteração forçada para deploy
+SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Usa banco de dados para sessões
+SESSION_COOKIE_SECURE = False  # Se estiver em HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+
 
