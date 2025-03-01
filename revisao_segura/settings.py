@@ -7,13 +7,14 @@ from django.contrib.messages import constants as messages
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Chave secreta do Django
-SECRET_KEY = 'Revisaosegura.2025'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback_key")
 
 # Ativar modo de depuração (Apenas para desenvolvimento)
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # Hosts permitidos
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+[
     "siterevisaosegura.onrender.com",  # Domínio do Render
     "127.0.0.1",  # Para testes locais
     "localhost"   # Para rodar localmente
@@ -82,13 +83,14 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
     DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
     }
 else:
+    print("⚠️  AVISO: Nenhum DATABASE_URL encontrado. Usando SQLite local.")
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',  # Correção do caminho
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 
@@ -152,12 +154,16 @@ GERENCIANET_CREDENTIALS = {
     "cert_path": "caminho/do/seu/certificado.pem"
 }
 
+SECURE_HSTS_SECONDS = 31536000  # 1 ano
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = ["https://www.revisaosegura.com.br", 'https://siterevisaosegura.onrender.com']
+CSRF_COOKIE_SECURE = True
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',
@@ -175,7 +181,7 @@ else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Usa banco de dados para sessões
-SESSION_COOKIE_SECURE = False  # Se estiver em HTTPS
+SESSION_COOKIE_SECURE = True  # Se estiver em HTTPS
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_AGE = 86400
