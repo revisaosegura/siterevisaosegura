@@ -128,7 +128,7 @@ STATIC_ROOT = str(BASE_DIR / 'staticfiles')  # Convertendo para string
 
 # Configuração de arquivos de mídia (uploads de documentos e contratos)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join("/tmp", "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Configuração do Django Rest Framework (DRF) para APIs
 REST_FRAMEWORK = {
@@ -195,4 +195,6 @@ CLOUDINARY = {
     "API_SECRET": "rGYrmZ31oTC_3wUWP_ZXIgHmETk",
     "secure": True,  # ✅ Adicione aspas na chave!
 }
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
