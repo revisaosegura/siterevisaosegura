@@ -10,3 +10,5 @@ django.setup()
 call_command("migrate")  # Roda as migrações automaticamente
 
 application = get_asgi_application()
+
+os.makedirs("/tmp/media", exist_ok=True)

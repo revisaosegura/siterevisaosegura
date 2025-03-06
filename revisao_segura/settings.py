@@ -2,6 +2,8 @@ import os
 import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import cloudinary
+import cloudinary.uploader
 
 # Diretório base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,7 +127,7 @@ STATIC_ROOT = str(BASE_DIR / 'staticfiles')  # Convertendo para string
 
 # Configuração de arquivos de mídia (uploads de documentos e contratos)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join("/tmp", "media")
 
 # Configuração do Django Rest Framework (DRF) para APIs
 REST_FRAMEWORK = {
@@ -186,3 +188,10 @@ SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_AGE = 86400
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "dzzccricy",
+    "API_KEY": "614811795386991",
+    "API_SECRET": "rGYrmZ31oTC_3wUWP_ZXIgHmETk",
+}
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

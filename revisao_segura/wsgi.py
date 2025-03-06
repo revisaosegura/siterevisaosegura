@@ -19,3 +19,6 @@ call_command('migrate')
 print("Migrações aplicadas com sucesso!")
 
 application = get_wsgi_application()
+
+os.makedirs("/tmp/media", exist_ok=True)
+

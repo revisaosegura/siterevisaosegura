@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import JsonResponse
+import cloudinary.uploader
 
 def home(request):
     return render(request, 'home.html')
@@ -24,3 +26,11 @@ def contato(request):
         return redirect("contato")  # Redireciona para evitar reenvio do formulário
 
     return render(request, "contato.html")
+
+def upload_documento(request):
+    if request.method == 'POST' and request.FILES.get('file'):
+        arquivo = request.FILES['file']
+        resultado = cloudinary.uploader.upload(arquivo)
+        return JsonResponse({'url': resultado['secure_url']})
+
+    return JsonResponse({'error': 'Nenhum arquivo enviado'}, status=400)
