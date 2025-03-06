@@ -189,11 +189,10 @@ SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_AGE = 86400
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "dzzccricy",
+CLOUDINARY = {
+    "cloud_name": "dzzccricy",
     "API_KEY": "614811795386991",
     "API_SECRET": "rGYrmZ31oTC_3wUWP_ZXIgHmETk",
-secure=True,
-)
+    "secure": True,  # ✅ Adicione aspas na chave!
+}
 
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
