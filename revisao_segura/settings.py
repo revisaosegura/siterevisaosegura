@@ -3,6 +3,7 @@ import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
 import cloudinary
+import cloudinary.api
 import cloudinary.uploader
 
 # Diretório base do projeto
@@ -192,6 +193,7 @@ CLOUDINARY_STORAGE = {
     "CLOUD_NAME": "dzzccricy",
     "API_KEY": "614811795386991",
     "API_SECRET": "rGYrmZ31oTC_3wUWP_ZXIgHmETk",
-}
+secure=True,
+)
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
