@@ -10,6 +10,7 @@ from .forms import DocumentoClienteForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse
+import cloudinary.uploader
 
 def cadastro(request):
     if request.method == 'POST':
