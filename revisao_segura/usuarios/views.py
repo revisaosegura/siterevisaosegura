@@ -12,7 +12,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse
 import cloudinary.uploader
 from django.test import RequestFactory
-from revisao_segura.usuarios.views import dashboard
 
 def cadastro(request):
     if request.method == 'POST':
