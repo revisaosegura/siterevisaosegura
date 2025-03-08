@@ -1,6 +1,6 @@
 from django.conf.urls.static import static
 from django.urls import path
-from django.contrib.auth import views
+from django.contrib.auth import views as auth_views  # ✅ Correção aqui!
 from revisao_segura.usuarios.views import cadastro, login_view, dashboard, logout_view, perfil, editar_perfil, upload_documento, enviar_documento_cliente, excluir_documento # 🔹 Correção da importação
 from django.conf import settings
 
