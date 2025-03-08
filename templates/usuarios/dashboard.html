@@ -4,13 +4,11 @@
 
 {% block content %}
 <div class="container mt-5">
-    <!-- Saudação ao Usuário -->
     <div class="text-center">
         <h2 class="fw-bold text-primary">Bem-vindo, {{ user.username }}!</h2>
         <p class="text-muted">Gerencie seus boletos, documentos e informações da conta de forma rápida e segura.</p>
     </div>
 
-    <!-- Mensagens de Sucesso/Erro -->
     {% if messages %}
         <script>
             setTimeout(function() {
@@ -20,7 +18,7 @@
                     alert.style.opacity = "0";
                     setTimeout(() => alert.remove(), 500);
                 }
-            }, 3000); // Mensagem some após 3 segundos
+            }, 3000);
         </script>
 
         {% for message in messages %}
@@ -31,7 +29,6 @@
         {% endfor %}
     {% endif %}
 
-    <!-- Informações do Usuário -->
     <div class="row mt-4">
         <div class="col-md-6">
             <div class="card shadow-sm p-3 mb-4 bg-white rounded text-center">
@@ -48,7 +45,6 @@
     </div>
 
     {% if user.is_authenticated %}
-    <!-- Formulário para Envio de Documento -->
     <div class="card shadow-sm p-3 mb-4 bg-light rounded">
         <h5 class="fw-bold"><i class="fas fa-upload"></i> Enviar Documento</h5>
         <form method="post" enctype="multipart/form-data" action="{% url 'enviar_documento_cliente' %}">
@@ -57,7 +53,6 @@
                 <label for="arquivo" class="form-label">Escolha um arquivo PDF:</label>
                 <input type="file" name="arquivo" id="arquivo" class="form-control" accept="application/pdf" required>
             </div>
-
             <button type="submit" class="btn btn-success w-100">
                 <i class="fas fa-paper-plane"></i> Enviar Documento
             </button>
@@ -65,7 +60,6 @@
     </div>
     {% endif %}
 
-    <!-- Documentos Enviados pelo Cliente -->
     <div class="card shadow-sm p-3 mb-4 bg-light rounded">
         <h5 class="fw-bold"><i class="fas fa-folder-open"></i> Meus Documentos Enviados</h5>
         <ul class="list-group">
@@ -73,8 +67,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>
                         <i class="fas fa-file-pdf text-danger"></i>
-                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.name }}</a>
-                        - Enviado em {{ documento.data_envio|date:"d/m/Y H:i" }}
+                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.public_id }}</a>
                         <span class="badge {% if documento.status == 'pendente' %}bg-warning{% elif documento.status == 'aprovado' %}bg-success{% else %}bg-danger{% endif %}">
                             {{ documento.get_status_display }}
                         </span>
@@ -89,7 +82,6 @@
         </ul>
     </div>
 
-    <!-- Documentos Recebidos do Administrador -->
     <div class="card shadow-sm p-3 mb-4 bg-light rounded">
         <h5 class="fw-bold"><i class="fas fa-file-download"></i> Documentos Recebidos</h5>
         <ul class="list-group">
@@ -97,8 +89,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>
                         <i class="fas fa-file-pdf text-primary"></i>
-                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.name }}</a>
-                        - Enviado pelo Admin em {{ documento.data_envio|date:"d/m/Y H:i" }}
+                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.public_id }}</a>
                     </span>
                     <a href="{{ documento.arquivo.url }}" class="btn btn-primary btn-sm">
                         <i class="fas fa-download"></i> Baixar
@@ -110,7 +101,6 @@
         </ul>
     </div>
 
-    <!-- Ações do Usuário -->
     <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
         <a href="{% url 'perfil' %}" class="btn btn-info btn-lg">
             <i class="fas fa-user"></i> Ver Perfil
