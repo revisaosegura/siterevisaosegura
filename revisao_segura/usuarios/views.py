@@ -122,7 +122,7 @@ def enviar_documento_cliente(request):
                 resource_type="raw"  # 🔹 Define como "raw" para aceitar PDFs
             )
             
-            documento.url_arquivo = resultado['secure_url']  # 🔹 Salva a URL correta do Cloudinary
+            documento.url_arquivo = resultado['secure_url'].replace("/image/", "/raw/")
             documento.save()
             messages.success(request, "Documento enviado com sucesso!")
         else:
