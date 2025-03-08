@@ -1,15 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from revisao_segura.boletos.models import Boleto
 from django.contrib import messages
 from django.http import HttpResponse
-from reportlab.pdfgen import canvas
-from datetime import date
 from django.urls import reverse
 from .models import Boleto
-from django.shortcuts import get_object_or_404, render
-from datetime import datetime, timedelta
 import cloudinary.uploader
+from datetime import datetime
 
 @login_required
 def listar_boletos(request):
@@ -21,30 +17,32 @@ def detalhar_boleto(request, boleto_id):
     boleto = get_object_or_404(Boleto, id=boleto_id)
     return render(request, 'boletos/detalhar_boleto.html', {'boleto': boleto})
 
+@login_required
 def gerar_boleto(request):
     if request.method == "POST":
         valor = request.POST.get("valor")
+        vencimento = request.POST.get("vencimento")
+        documento = request.FILES.get("documento")
 
-        if not valor:
-            messages.error(request, "Por favor, insira um valor válido para o boleto.")
+        if not valor or not vencimento:
+            messages.error(request, "Por favor, preencha todos os campos obrigatórios.")
             return redirect("gerar_boleto")
+
+        # 🔹 Upload do documento para o Cloudinary
+        documento_url = None
+        if documento:
+            upload_result = cloudinary.uploader.upload(documento)
+            documento_url = upload_result['url']
 
         boleto = Boleto.objects.create(
             usuario=request.user,
             valor=valor,
-            data_vencimento="dd/mm/yyyy",
-            status="pendente"
+            vencimento=vencimento,
+            status="pendente",
+            documento=documento_url  # 🔹 Salva o link do documento no Cloudinary
         )
-        
+
         messages.success(request, "Boleto gerado com sucesso!")
         return redirect("listar_boletos")
 
-    url = reverse('gerar_boleto', args=[boleto.id])
-
     return render(request, "boletos/gerar_boleto.html")
-
-def gerar_boleto(request, boleto_id):
-    boleto = get_object_or_404(Boleto, id=boleto_id)
-    return render(request, 'boletos/gerar_boleto.html', {'boleto': boleto})
-
-
