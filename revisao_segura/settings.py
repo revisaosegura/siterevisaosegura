@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 🔹 Configuração do Django
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="fallback_key_should_be_removed")
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = config("DEBUG", default=False, cast=lambda v: v.lower() in ("true", "1"))
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
 
 # 🔹 Configuração do Banco de Dados PostgreSQL
