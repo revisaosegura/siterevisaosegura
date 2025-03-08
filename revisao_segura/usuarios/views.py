@@ -13,6 +13,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse
 import cloudinary.uploader
 from django.test import RequestFactory
+from django.urls import reverse
 
 def cadastro(request):
     if request.method == 'POST':
@@ -122,10 +123,10 @@ def enviar_documento_cliente(request):
             documento.save()
 
             messages.success(request, "Documento enviado com sucesso!")  # Adiciona a mensagem
-            return redirect(reverse('usuarios:dashboard'))  # 🔹 Redireciona corretamente
+return redirect(reverse('dashboard'))
         else:
             messages.error(request, "Erro ao enviar o documento. Verifique o arquivo.")
-            return redirect(reverse('usuarios:dashboard'))  # 🔹 Redireciona corretamente
+return redirect(reverse('dashboard'))
 
     form_cliente = DocumentoClienteForm()  # Corrigido
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
@@ -148,7 +149,7 @@ def excluir_documento(request, documento_id):
     else:
         messages.error(request, "Você não tem permissão para excluir este documento.")
 
-    return redirect(reverse('usuarios:dashboard.html'))
+return redirect(reverse('dashboard'))
 
 def logout_view(request):
     logout(request)
