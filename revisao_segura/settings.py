@@ -1,30 +1,32 @@
 import os
-import dj_database_url
 from pathlib import Path
-from django.contrib.messages import constants as messages
+from dotenv import load_dotenv
+from decouple import config, Csv
+import dj_database_url
 import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 
+# Carregar variáveis do .env
+load_dotenv()
+
 # Diretório base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Chave secreta do Django
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback_key_should_be_removed")
+# 🔹 Configuração do Django
+SECRET_KEY = config("DJANGO_SECRET_KEY", default="fallback_key_should_be_removed")
+DEBUG = config("DEBUG", default=False, cast=bool)
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
 
-# Ativar modo de depuração (Apenas para desenvolvimento)
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# 🔹 Configuração do Banco de Dados PostgreSQL
+DATABASES = {
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
+}
 
-# Hosts permitidos
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "www.revisaosegura.com.br",
-    "revisaosegura.com.br",
-]
-APPEND_SLASH = True
+# Debug: Mostrar a configuração do banco
+print(f"🚀 CONFIG FINAL DATABASES: {DATABASES}")
 
-# Aplicações instaladas
+# 🔹 Aplicações instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,20 +34,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "django_extensions",
-    'app',  # Certifique-se de que seu app está listado aqui!
-  
-    # Aplicativos internos
-    'revisao_segura.usuarios',  # ⚠️ Certifique-se de que está assim!
-    'revisao_segura.boletos',
+    'cloudinary',
+    'cloudinary_storage',
+    'rest_framework',
 
-    # Bibliotecas externas
-    'rest_framework',  # API
+    # Aplicativos internos
+    'revisao_segura.usuarios',
+    'revisao_segura.boletos',
 ]
 
-# Middlewares
+# 🔹 Middlewares
 MIDDLEWARE = [
-    "revisao_segura.middleware.WWWRedirectMiddleware",  # Adicione essa linha
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,17 +52,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Adicione esta linha
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
-# Configuração de URLs
-ROOT_URLCONF = 'revisao_segura.urls'
-
-# Configuração dos Templates
+# 🔹 Configuração dos Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Caminho correto para templates
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,61 +72,38 @@ TEMPLATES = [
     },
 ]
 
-# Configuração do WSGI
+# 🔹 Configuração do WSGI
 WSGI_APPLICATION = 'revisao_segura.wsgi.application'
 
-# Configuração do banco de dados (SQLite)
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.config(default=DATABASE_URL)
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-
-# Configuração de autenticação e senhas
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
-# Configuração do modelo de usuário personalizado
+# 🔹 Configuração de autenticação
 AUTH_USER_MODEL = 'usuarios.Usuario'
-
-# Configuração de URLs de autenticação
 LOGIN_URL = '/usuarios/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Configuração de idioma e fuso horário
+# 🔹 Configuração de linguagem e fuso horário
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
-# Configuração de arquivos estáticos
+# 🔹 Configuração de arquivos estáticos
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_ROOT = str(BASE_DIR / 'staticfiles')  # Convertendo para string
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Configuração de arquivos de mídia (uploads de documentos e contratos)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 🔹 Configuração do Cloudinary
+cloudinary.config(
+    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+    api_key=config("CLOUDINARY_API_KEY"),
+    api_secret=config("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
-# Configuração do Django Rest Framework (DRF) para APIs
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME')}/"
+
+# 🔹 Configuração do Django Rest Framework (DRF)
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -140,33 +113,33 @@ REST_FRAMEWORK = {
     ],
 }
 
-# Configuração de envio de e-mails para redefinição de senha
+# 🔹 Configuração de envio de e-mails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Configurar para o seu provedor de e-mail
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'seu_email@gmail.com'  # Configurar com seu e-mail
-EMAIL_HOST_PASSWORD = 'sua_senha'  # Configurar com sua senha
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='seu_email@gmail.com')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='sua_senha')
 DEFAULT_FROM_EMAIL = 'Revisão Segura <noreply@seusite.com>'
 
-GERENCIANET_CREDENTIALS = {
-    "client_id": "SUA_CLIENT_ID",
-    "client_secret": "SUA_CLIENT_SECRET",
-    "sandbox": True,  # Defina como False para ambiente de produção
-    "cert_path": "caminho/do/seu/certificado.pem"
-}
-
-SECURE_HSTS_SECONDS = 31536000  # 1 ano
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+# 🔹 Configuração de segurança
+SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=bool)
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = True
 X_FRAME_OPTIONS = 'DENY'
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CSRF_TRUSTED_ORIGINS = ["https://www.revisaosegura.com.br", 'https://siterevisaosegura.onrender.com']
-CSRF_COOKIE_SECURE = True
 
+# 🔹 Configuração de sessões
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_AGE = 86400  # 1 dia
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# 🔹 Configuração de mensagens do Django
+from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',
     messages.INFO: 'info',
@@ -175,26 +148,5 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static'),
-    ]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Usa banco de dados para sessões
-SESSION_COOKIE_SECURE = True  # Se estiver em HTTPS
-SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = "Lax"
-SESSION_COOKIE_AGE = 86400
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
-CLOUDINARY = {
-    "cloud_name": "dzzccricy",
-    "API_KEY": "614811795386991",
-    "API_SECRET": "rGYrmZ31oTC_3wUWP_ZXIgHmETk",
-    "secure": True,  # ✅ Adicione aspas na chave!
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+# 🔹 Debug para confirmar carregamento
+print("✅ Configuração do settings.py carregada com sucesso!")
