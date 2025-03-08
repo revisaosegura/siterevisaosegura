@@ -6,6 +6,7 @@ import dj_database_url
 import cloudinary
 import cloudinary.api
 import cloudinary.uploader
+from cloudinary.utils import cloudinary_url
 
 # Carregar variáveis do .env
 load_dotenv()
@@ -96,12 +97,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # 🔹 Configuração do Cloudinary
-CLOUDINARY_STORAGE = {
+cloudinary.config(
     cloud_name = "dzzccricy", 
     api_key = "614811795386991", 
     api_secret = "rGYrmZ31oTC_3wUWP_ZXIgHmETk", # Click 'View API Keys' above to copy your API secret
     secure=True
-}
+)
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
