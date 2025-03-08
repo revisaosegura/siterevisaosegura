@@ -21,7 +21,7 @@ ROOT_URLCONF = "revisao_segura.urls"
 
 # 🔹 Configuração do Banco de Dados PostgreSQL
 DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
+    'default': dj_database_url.config(default='postgresql://siterevisaosegura_db_user:kmMn1GLtxNluXUOEY1TvJZyOxIiZJCHx@dpg-cv0g1dlsvqrc738r0r4g-a.oregon-postgres.render.com/siterevisaosegura_db')
 }
 
 # Debug: Mostrar a configuração do banco
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'rest_framework',
+    'sslserver',
 
     # Aplicativos internos
     'revisao_segura.usuarios',
@@ -79,8 +80,8 @@ WSGI_APPLICATION = 'revisao_segura.wsgi.application'
 
 # 🔹 Configuração de autenticação
 AUTH_USER_MODEL = 'usuarios.Usuario'
-LOGIN_URL = '/usuarios/login.html/'
-LOGIN_REDIRECT_URL = '/dashboard.html/'
+LOGIN_URL = '/usuarios/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
 # 🔹 Configuração de linguagem e fuso horário
@@ -95,12 +96,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # 🔹 Configuração do Cloudinary
-cloudinary.config(
+CLOUDINARY_STORAGE = {
     cloud_name = "dzzccricy", 
     api_key = "614811795386991", 
     api_secret = "rGYrmZ31oTC_3wUWP_ZXIgHmETk", # Click 'View API Keys' above to copy your API secret
     secure=True
-)
+}
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
@@ -120,9 +121,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='seu_email@gmail.com')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='contato@revisaosegura.com.br')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='sua_senha')
-DEFAULT_FROM_EMAIL = 'Revisão Segura <noreply@seusite.com>'
+DEFAULT_FROM_EMAIL = 'Revisão Segura <contato@revisaosegura.com.br>'
 
 # 🔹 Configuração de segurança
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)
@@ -152,3 +153,22 @@ MESSAGE_TAGS = {
 
 # 🔹 Debug para confirmar carregamento
 print("✅ Configuração do settings.py carregada com sucesso!")
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
