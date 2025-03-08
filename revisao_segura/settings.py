@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 🔹 Configuração do Django
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="fallback_key_should_be_removed")
 DEBUG = config("DEBUG", default=False, cast=lambda v: v.lower() in ("true", "1"))
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
+ALLOWED_HOSTS = ["www.revisaosegura.com.br", "revisaosegura.com.br", "127.0.0.1", "localhost"]
 ROOT_URLCONF = "revisao_segura.urls"
 
 # 🔹 Configuração do Banco de Dados PostgreSQL
@@ -124,7 +124,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='sua_senha')
 DEFAULT_FROM_EMAIL = 'Revisão Segura <noreply@seusite.com>'
 
 # 🔹 Configuração de segurança
-SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=bool)
+SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
