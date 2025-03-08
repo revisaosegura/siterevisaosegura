@@ -95,14 +95,14 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # 🔹 Configuração do Cloudinary
 cloudinary.config(
-    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
-    api_key=config("CLOUDINARY_API_KEY"),
-    api_secret=config("CLOUDINARY_API_SECRET"),
+    cloud_name = "dzzccricy", 
+    api_key = "614811795386991", 
+    api_secret = "rGYrmZ31oTC_3wUWP_ZXIgHmETk", # Click 'View API Keys' above to copy your API secret
     secure=True
 )
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-MEDIA_URL = f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME')}/"
+MEDIA_URL = '/media/'
 
 # 🔹 Configuração do Django Rest Framework (DRF)
 REST_FRAMEWORK = {

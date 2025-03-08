@@ -24,7 +24,8 @@ class Documento(models.Model):
     data_envio = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pendente')
     enviado_pelo_cliente = models.BooleanField(default=False)  # Indica se foi enviado pelo cliente
-    arquivo = models.FileField(upload_to="documentos/")
+    nome = models.CharField(max_length=255)
+    arquivo = CloudinaryField('documentos/')
 
 def __str__(self):
         tipo = "Cliente" if self.enviado_pelo_cliente else "Admin"

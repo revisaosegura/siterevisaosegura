@@ -6,7 +6,7 @@ from cloudinary.utils import cloudinary_url
 cloudinary.config( 
     cloud_name = "dzzccricy", 
     api_key = "614811795386991", 
-    api_secret = "<your_api_secret>", # Click 'View API Keys' above to copy your API secret
+    api_secret = "rGYrmZ31oTC_3wUWP_ZXIgHmETk", # Click 'View API Keys' above to copy your API secret
     secure=True
 )
 
