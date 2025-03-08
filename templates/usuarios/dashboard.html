@@ -72,9 +72,7 @@
                             {{ documento.get_status_display }}
                         </span>
                     </span>
-                    <a href="{% url 'excluir_documento' documento.id %}" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash-alt"></i> Excluir
-                    </a>
+                    <a href="{% url 'usuarios:excluir_documento' documento.id %}">Excluir</a>
                 </li>
             {% empty %}
                 <li class="list-group-item text-center text-muted">Nenhum documento enviado.</li>
