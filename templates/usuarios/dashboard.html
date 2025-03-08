@@ -67,7 +67,10 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>
                         <i class="fas fa-file-pdf text-danger"></i>
-<a href="{{ documento.url }}" target="_blank">{{ documento.url|cut:"https://res.cloudinary.com/dzzccricy/raw/upload/v1234567890/" }}</a>
+                        <a href="{{ documento.arquivo.url }}" target="_blank">
+    {{ documento.nome }}
+</a>
+
                         <span class="badge {% if documento.status == 'pendente' %}bg-warning{% elif documento.status == 'aprovado' %}bg-success{% else %}bg-danger{% endif %}">
                             {{ documento.get_status_display }}
                         </span>

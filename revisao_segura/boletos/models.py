@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 
 class Boleto(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # ✅ Correção aqui
@@ -11,6 +12,7 @@ class Boleto(models.Model):
         choices=[('pago', 'Pago'), ('pendente', 'Pendente'), ('vencido', 'Vencido')]
     )
     arquivo = models.FileField(upload_to="boletos/", null=True, blank=True)
+    arquivo = CloudinaryField('documentos/')
 
     def __str__(self):
         return f"Boleto de R$ {self.valor} - Vencimento: {self.vencimento}"
