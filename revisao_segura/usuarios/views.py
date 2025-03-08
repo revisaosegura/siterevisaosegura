@@ -18,7 +18,7 @@ def cadastro(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard')
+            return redirect('dashboard.html')
     else:
         form = UserRegisterForm()
     return render(request, 'usuarios/cadastro.html', {'form': form})
@@ -29,7 +29,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')
+            return redirect('dashboard.html')
     else:
         form = AuthenticationForm()
     return render(request, 'usuarios/login.html', {'form': form})
@@ -82,7 +82,7 @@ def editar_perfil(request):
 
             messages.success(request, 'Perfil atualizado com sucesso!')
             user.save()
-            return redirect('usuarios/editar_perfil')
+            return redirect('usuarios/editar_perfil.html')
         else:
             messages.error(request, 'Por favor, corrija os erros abaixo.')
 
@@ -102,7 +102,7 @@ def upload_documento(request):
             messages.success(request, "Documento enviado com sucesso!")
         else:
             messages.error(request, "Erro ao enviar documento.")
-        return redirect("dashboard")
+        return redirect('dashboard.html')
 
     form = DocumentoForm()
     documentos = Documento.objects.filter(usuario=request.user)
@@ -120,10 +120,10 @@ def enviar_documento_cliente(request):
             documento.save()
 
             messages.success(request, "Documento enviado com sucesso!")  # Adiciona a mensagem
-            return redirect('dashboard')  # Redireciona para evitar reenvio do formulário
+            return redirect('dashboard.html')  # Redireciona para evitar reenvio do formulário
         else:
             messages.error(request, "Erro ao enviar o documento. Verifique o arquivo.")
-            return redirect('dashboard')  # Retorna ao dashboard se houver erro
+            return redirect('dashboard.html')  # Retorna ao dashboard se houver erro
 
     form_cliente = DocumentoClienteForm()  # Corrigido
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
@@ -146,9 +146,9 @@ def excluir_documento(request, documento_id):
     else:
         messages.error(request, "Você não tem permissão para excluir este documento.")
 
-    return redirect('dashboard')
+    return redirect('dashboard.html')
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('usuarios/login.html')
 
