@@ -1,18 +1,12 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from revisao_segura.usuarios.forms import UserRegisterForm  # 🔹 Correção da importação
-from revisao_segura.usuarios.models import Usuario  # 🔹 Correção da importação
-from revisao_segura.usuarios.models import Documento
-from .forms import PerfilForm
-from .forms import DocumentoClienteForm
+from revisao_segura.usuarios.forms import UserRegisterForm  
+from revisao_segura.usuarios.models import Usuario, Documento
+from .forms import PerfilForm, DocumentoClienteForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.http import HttpResponse
-import cloudinary.uploader
-from django.test import RequestFactory
 from django.urls import reverse
 
 def cadastro(request):
@@ -118,17 +112,15 @@ def enviar_documento_cliente(request):
         if form.is_valid():
             documento = form.save(commit=False)
             documento.usuario = request.user
-            documento.enviado_pelo_cliente = True  # Define que foi enviado pelo cliente
-            documento.status = "pendente"  # O admin precisará aprovar
+            documento.enviado_pelo_cliente = True  
+            documento.status = "pendente"
             documento.save()
-
-            messages.success(request, "Documento enviado com sucesso!")  # Adiciona a mensagem
-return redirect(reverse('dashboard'))
+            messages.success(request, "Documento enviado com sucesso!")
         else:
             messages.error(request, "Erro ao enviar o documento. Verifique o arquivo.")
-return redirect(reverse('dashboard'))
+        return redirect(reverse('dashboard'))  # ✅ Correção no redirecionamento
 
-    form_cliente = DocumentoClienteForm()  # Corrigido
+    form_cliente = DocumentoClienteForm()
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
     documentos_admin = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=False)
 
@@ -142,14 +134,13 @@ return redirect(reverse('dashboard'))
 def excluir_documento(request, documento_id):
     documento = get_object_or_404(Documento, id=documento_id)
 
-    # Verifica se o documento pertence ao usuário
     if documento.usuario == request.user:
         documento.delete()
         messages.success(request, "Documento excluído com sucesso.")
     else:
         messages.error(request, "Você não tem permissão para excluir este documento.")
 
-return redirect(reverse('dashboard'))
+    return redirect(reverse('dashboard'))  # ✅ Correção no redirecionamento
 
 def logout_view(request):
     logout(request)
