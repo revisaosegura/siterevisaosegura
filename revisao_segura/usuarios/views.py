@@ -49,7 +49,7 @@ def dashboard(request):
     print(f"Usuário: {request.user}")  # Depuração
     print(f"Documentos encontrados: {documentos_cliente}, {documentos_admin}")  # Depuração
 
-    return render(request, "dashboard.html", {
+    return render(request, "usuarios/dashboard.html", {
         "form_cliente": form_cliente,
         "documentos_cliente": documentos_cliente,
         "documentos_admin": documentos_admin,
