@@ -11,6 +11,8 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse
 import cloudinary.uploader
+from django.test import RequestFactory
+from revisao_segura.usuarios.views import dashboard
 
 def cadastro(request):
     if request.method == 'POST':
@@ -151,4 +153,6 @@ def excluir_documento(request, documento_id):
 def logout_view(request):
     logout(request)
     return redirect('usuarios/login.html')
+
+
 

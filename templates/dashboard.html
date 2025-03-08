@@ -1,1 +1,151 @@
-<h1>Dashboard Funcionando</h1>
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Minha Conta{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Saudação ao Usuário -->
+    <div class="text-center">
+        <h2 class="fw-bold text-primary">Bem-vindo, {{ user.username }}!</h2>
+        <p class="text-muted">Gerencie seus boletos, documentos e informações da conta de forma rápida e segura.</p>
+    </div>
+
+    <!-- Mensagens de Sucesso/Erro -->
+    {% if messages %}
+        <script>
+            setTimeout(function() {
+                let alert = document.querySelector(".alert");
+                if (alert) {
+                    alert.style.transition = "opacity 0.5s";
+                    alert.style.opacity = "0";
+                    setTimeout(() => alert.remove(), 500);
+                }
+            }, 3000); // Mensagem some após 3 segundos
+        </script>
+
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Informações do Usuário -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4 bg-white rounded text-center">
+                <h5 class="fw-bold"><i class="fas fa-id-card"></i> Seu CPF:</h5>
+                <p class="text-muted">{{ user.cpf }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3 mb-4 bg-white rounded text-center">
+                <h5 class="fw-bold"><i class="fas fa-phone"></i> Seu Telefone:</h5>
+                <p class="text-muted">{{ user.telefone }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <!-- Formulário para Envio de Documento -->
+    <div class="card shadow-sm p-3 mb-4 bg-light rounded">
+        <h5 class="fw-bold"><i class="fas fa-upload"></i> Enviar Documento</h5>
+        <form method="post" enctype="multipart/form-data" action="{% url 'enviar_documento_cliente' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="arquivo" class="form-label">Escolha um arquivo PDF:</label>
+                <input type="file" name="arquivo" id="arquivo" class="form-control" accept="application/pdf" required>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+                <i class="fas fa-paper-plane"></i> Enviar Documento
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Documentos Enviados pelo Cliente -->
+    <div class="card shadow-sm p-3 mb-4 bg-light rounded">
+        <h5 class="fw-bold"><i class="fas fa-folder-open"></i> Meus Documentos Enviados</h5>
+        <ul class="list-group">
+            {% for documento in documentos_cliente %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="fas fa-file-pdf text-danger"></i>
+                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.name }}</a>
+                        - Enviado em {{ documento.data_envio|date:"d/m/Y H:i" }}
+                        <span class="badge {% if documento.status == 'pendente' %}bg-warning{% elif documento.status == 'aprovado' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ documento.get_status_display }}
+                        </span>
+                    </span>
+                    <a href="{% url 'excluir_documento' documento.id %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i> Excluir
+                    </a>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center text-muted">Nenhum documento enviado.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Documentos Recebidos do Administrador -->
+    <div class="card shadow-sm p-3 mb-4 bg-light rounded">
+        <h5 class="fw-bold"><i class="fas fa-file-download"></i> Documentos Recebidos</h5>
+        <ul class="list-group">
+            {% for documento in documentos_admin %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="fas fa-file-pdf text-primary"></i>
+                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.name }}</a>
+                        - Enviado pelo Admin em {{ documento.data_envio|date:"d/m/Y H:i" }}
+                    </span>
+                    <a href="{{ documento.arquivo.url }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-download"></i> Baixar
+                    </a>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center text-muted">Nenhum documento recebido.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Ações do Usuário -->
+    <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
+        <a href="{% url 'perfil' %}" class="btn btn-info btn-lg">
+            <i class="fas fa-user"></i> Ver Perfil
+        </a>
+        <a href="{% url 'editar_perfil' %}" class="btn btn-warning btn-lg">
+            <i class="fas fa-edit"></i> Editar Perfil
+        </a>
+        <a href="{% url 'listar_boletos' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-receipt"></i> Meus Boletos
+        </a>
+        <form action="{% url 'logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-lg">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+    .btn:hover {
+        transform: scale(1.05);
+    }
+    .alert {
+        transition: opacity 0.5s ease-in-out;
+    }
+</style>
+{% endblock %}
