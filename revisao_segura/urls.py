@@ -3,10 +3,6 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from revisao_segura.views import home, sobre, contato, upload_documento
-from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("<h1>Site Rodando no Render 🚀</h1>")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
