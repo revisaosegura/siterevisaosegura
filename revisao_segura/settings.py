@@ -7,6 +7,7 @@ import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 from cloudinary.utils import cloudinary_url
+import logging
 
 # Carregar variáveis do .env
 load_dotenv()
@@ -16,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 🔹 Configuração do Django
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="fallback_key_should_be_removed")
-DEBUG = config("DEBUG", default=False, cast=lambda v: v.lower() in ("true", "1"))
+DEBUG = False
 ALLOWED_HOSTS = ["www.revisaosegura.com.br", "revisaosegura.com.br", "127.0.0.1", "localhost"]
 ROOT_URLCONF = "revisao_segura.urls"
 
@@ -172,3 +173,12 @@ LOGGING = {
         },
     },
 }
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("debug.log"),
+        logging.StreamHandler()
+    ]
+)
