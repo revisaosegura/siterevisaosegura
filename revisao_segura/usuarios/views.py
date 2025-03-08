@@ -8,6 +8,7 @@ from .forms import PerfilForm, DocumentoClienteForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.urls import reverse
+import cloudinary.uploader
 
 def cadastro(request):
     if request.method == 'POST':
@@ -114,6 +115,14 @@ def enviar_documento_cliente(request):
             documento.usuario = request.user
             documento.enviado_pelo_cliente = True  
             documento.status = "pendente"
+
+            # 🔹 Alteração no upload para aceitar PDFs corretamente
+            resultado = cloudinary.uploader.upload(
+                request.FILES['arquivo'],
+                resource_type="raw"  # 🔹 Define como "raw" para aceitar PDFs
+            )
+            
+            documento.url_arquivo = resultado['secure_url']  # 🔹 Salva a URL correta do Cloudinary
             documento.save()
             messages.success(request, "Documento enviado com sucesso!")
         else:
