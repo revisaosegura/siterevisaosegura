@@ -122,10 +122,10 @@ def enviar_documento_cliente(request):
             documento.save()
 
             messages.success(request, "Documento enviado com sucesso!")  # Adiciona a mensagem
-            return redirect('usuarios/dashboard.html')  # Redireciona para evitar reenvio do formulário
+            return redirect(reverse('usuarios:dashboard'))  # 🔹 Redireciona corretamente
         else:
             messages.error(request, "Erro ao enviar o documento. Verifique o arquivo.")
-            return redirect('usuarios/dashboard.html')  # Retorna ao dashboard se houver erro
+            return redirect(reverse('usuarios:dashboard'))  # 🔹 Redireciona corretamente
 
     form_cliente = DocumentoClienteForm()  # Corrigido
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
@@ -148,7 +148,7 @@ def excluir_documento(request, documento_id):
     else:
         messages.error(request, "Você não tem permissão para excluir este documento.")
 
-    return redirect('usuarios/dashboard.html')
+    return redirect(reverse('usuarios:dashboard.html'))
 
 def logout_view(request):
     logout(request)
