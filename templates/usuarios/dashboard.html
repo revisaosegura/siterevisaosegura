@@ -64,12 +64,14 @@
         <h5 class="fw-bold"><i class="fas fa-folder-open"></i> Meus Documentos Enviados</h5>
         <ul class="list-group">
             {% for documento in documentos_cliente %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>
-                        <i class="fas fa-file-pdf text-danger"></i>
-                        <a href="{{ documento.arquivo.url }}" target="_blank">
-                            {{ documento.nome }}  <!-- Exibe o nome atribuído pelo admin -->
-                        </a>
+<tr>
+    <td>
+        <img src="{% static 'images/pdf-icon.png' %}" alt="PDF" width="20">
+        <a href="{{ documento.arquivo }}" target="_blank">
+            {{ documento.nome }}
+        </a>
+    </td>
+    <td>
 
                         <span class="badge {% if documento.status == 'pendente' %}bg-warning{% elif documento.status == 'aprovado' %}bg-success{% else %}bg-danger{% endif %}">
                             {{ documento.get_status_display }}

@@ -173,3 +173,7 @@ ALTER TABLE "usuarios_documento" DROP COLUMN "data_envio" CASCADE; (params None)
 (0.185) SELECT "django_content_type"."id", "django_content_type"."app_label", "django_content_type"."model" FROM "django_content_type" WHERE "django_content_type"."app_label" = 'boletos'; args=('boletos',); alias=default
 ALTER TABLE "usuarios_documento" DROP COLUMN "nome" CASCADE; (params None)
 2025-03-08 16:12:10,298 - DEBUG - ALTER TABLE "usuarios_documento" DROP COLUMN "nome" CASCADE; (params None)
+ALTER TABLE "boletos_boleto" DROP COLUMN "documento" CASCADE; (params None)
+2025-03-08 18:19:34,856 - DEBUG - ALTER TABLE "boletos_boleto" DROP COLUMN "documento" CASCADE; (params None)
+ALTER TABLE "boletos_boleto" DROP COLUMN "documento" CASCADE; (params None)
+2025-03-08 18:19:42,775 - DEBUG - ALTER TABLE "boletos_boleto" DROP COLUMN "documento" CASCADE; (params None)
