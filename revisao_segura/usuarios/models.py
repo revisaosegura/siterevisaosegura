@@ -21,7 +21,6 @@ class Documento(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="documentos")
     titulo = models.CharField(max_length=255)
     arquivo = CloudinaryField('documentos/')
-    data_envio = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pendente')
     enviado_pelo_cliente = models.BooleanField(default=False)  # Indica se foi enviado pelo cliente
     nome = models.CharField(max_length=255)
