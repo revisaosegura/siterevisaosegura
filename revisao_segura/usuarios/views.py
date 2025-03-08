@@ -44,17 +44,15 @@ def dashboard(request):
     # Pega todos os documentos que o ADMIN enviou para esse usuário
     documentos_admin = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=False)
 
+    print(f"Usuário: {request.user}")  # Depuração
+    print(f"Documentos encontrados: {documentos_cliente}, {documentos_admin}")  # Depuração
+
     return render(request, "dashboard.html", {
         "form_cliente": form_cliente,
         "documentos_cliente": documentos_cliente,
         "documentos_admin": documentos_admin,
     })
       
-    print(f"Usuário: {request.user}")  # Depuração
-    print(f"Documentos encontrados: {documentos}")  # Depuração
-    
-    return render(request, "dashboard.html", {"documentos": documentos})
-
 @login_required
 def perfil(request):
     return render(request, 'usuarios/perfil.html')
@@ -66,9 +64,10 @@ def editar_perfil(request):
         senha_atual = request.POST.get('senha_atual')
         nova_senha = request.POST.get('nova_senha')
         confirmar_senha = request.POST.get('confirmar_senha')
+
         if form.is_valid():
-            form.save()
-            return redirect('perfil')
+            user = form.save(commit=False)  # Salva apenas se a senha estiver correta
+
             if senha_atual and nova_senha and confirmar_senha:
                 if not request.user.check_password(senha_atual):
                     messages.error(request, 'Senha atual incorreta.')
@@ -79,8 +78,10 @@ def editar_perfil(request):
                     user.save()
                     update_session_auth_hash(request, user)  # Mantém o usuário logado após a troca de senha
                     messages.success(request, 'Senha alterada com sucesso!')
+                    return redirect('perfil')
 
             messages.success(request, 'Perfil atualizado com sucesso!')
+            user.save()
             return redirect('usuarios/editar_perfil')
         else:
             messages.error(request, 'Por favor, corrija os erros abaixo.')
@@ -124,7 +125,7 @@ def enviar_documento_cliente(request):
             messages.error(request, "Erro ao enviar o documento. Verifique o arquivo.")
             return redirect('dashboard')  # Retorna ao dashboard se houver erro
 
-    form = DocumentoClienteForm()
+    form_cliente = DocumentoClienteForm()  # Corrigido
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
     documentos_admin = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=False)
 
