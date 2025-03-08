@@ -13,6 +13,6 @@ admin.site.register(Usuario, UsuarioAdmin)
 
 @admin.register(Documento)
 class DocumentoAdmin(admin.ModelAdmin):
-    list_display = ("usuario", "arquivo", "status", "enviado_pelo_cliente", "data_envio")
+    list_display = ("usuario", "arquivo", "status", "enviado_pelo_cliente")
     list_filter = ("status", "enviado_pelo_cliente")
     search_fields = ("usuario__username", "arquivo")
