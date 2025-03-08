@@ -20,10 +20,15 @@ class Documento(models.Model):
 
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="documentos")
     titulo = models.CharField(max_length=255)
-    arquivo = CloudinaryField('documentos/')
+    arquivo = CloudinaryField('documento', folder='documentos/', resource_type='auto')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pendente')
     enviado_pelo_cliente = models.BooleanField(default=False)  # Indica se foi enviado pelo cliente
     arquivo = CloudinaryField('documentos/')
+
+    def save(self, *args, **kwargs):
+        if not self.nome and self.arquivo:
+            self.nome = self.arquivo.public_id.split('/')[-1]  # Obtém o nome original do arquivo
+        super().save(*args, **kwargs)
 
 def __str__(self):
         tipo = "Cliente" if self.enviado_pelo_cliente else "Admin"
