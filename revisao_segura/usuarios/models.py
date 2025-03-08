@@ -23,7 +23,6 @@ class Documento(models.Model):
     arquivo = CloudinaryField('documentos/')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pendente')
     enviado_pelo_cliente = models.BooleanField(default=False)  # Indica se foi enviado pelo cliente
-    nome = models.CharField(max_length=255)
     arquivo = CloudinaryField('documentos/')
 
 def __str__(self):
