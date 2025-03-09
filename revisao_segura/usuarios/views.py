@@ -154,7 +154,7 @@ def excluir_documento(request, documento_id):
 
 def logout_view(request):
     logout(request)
-    return redirect('usuarios/login.html')
+    return redirect('login')
 
 
 
