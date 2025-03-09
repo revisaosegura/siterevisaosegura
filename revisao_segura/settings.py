@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'revisao_segura.wsgi.application'
 AUTH_USER_MODEL = 'usuarios.Usuario'
 LOGIN_URL = '/usuarios/login.html/'
 LOGIN_REDIRECT_URL = '/usuarios/dashboard.html/'
-LOGOUT_REDIRECT_URL = '/usuarios/logout.html/'
+LOGOUT_REDIRECT_URL = 'login'
 
 # 🔹 Configuração de linguagem e fuso horário
 LANGUAGE_CODE = 'pt-br'
