@@ -40,8 +40,13 @@ def dashboard(request):
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
 
     # Pega todos os documentos que o ADMIN enviou para esse usuário
-    documentos_admin = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
+    documentos_admin = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=False)
 
+    context = {
+        'documentos_enviados': documentos_enviados,
+        'documentos_recebidos': documentos_recebidos,
+    }
+    
     print(f"Usuário: {request.user}")  # Depuração
     print(f"Documentos encontrados: {documentos_cliente}, {documentos_admin}")  # Depuração
 
