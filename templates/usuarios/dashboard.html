@@ -67,7 +67,9 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>
                         <i class="fas fa-file-pdf text-danger"></i>
-                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.public_id }}</a>
+                        <a href="{{ documento.arquivo.url }}" target="_blank">
+                            {{ documento.titulo }}
+                        </a>
                         <span class="badge {% if documento.status == 'pendente' %}bg-warning{% elif documento.status == 'aprovado' %}bg-success{% else %}bg-danger{% endif %}">
                             {{ documento.get_status_display }}
                         </span>
@@ -89,7 +91,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>
                         <i class="fas fa-file-pdf text-primary"></i>
-                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.public_id }}</a>
+                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.titulo }}</a>
                     </span>
                     <a href="{{ documento.arquivo.url }}" class="btn btn-primary btn-sm">
                         <i class="fas fa-download"></i> Baixar
@@ -139,3 +141,4 @@
     }
 </style>
 {% endblock %}
+
