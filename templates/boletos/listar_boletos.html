@@ -38,11 +38,11 @@
                                 <span class="badge bg-danger"><i class="fas fa-times-circle"></i> Vencido</span>
                             {% endif %}
                         </td>
-                        <td>
+                        <td class="d-flex gap-2">
                             <a href="{% url 'detalhar_boleto' boleto.id %}" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-eye"></i> Ver
                             </a>
-                            <a href="{{ boleto.arquivo.url }}" class="btn btn-success mt-2 w-100" target="_blank">
+                            <a href="{{ boleto.arquivo.url }}" class="btn btn-success btn-sm" target="_blank">
                                 <i class="fas fa-download"></i> Baixar
                             </a>
                         </td>
@@ -56,6 +56,12 @@
             <i class="fas fa-info-circle"></i> Nenhum boleto encontrado.
         </div>
     {% endif %}
+
+    <!-- Botão de Voltar ao Dashboard -->
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar ao Início
+        </a>
+    </div>
 </div>
 {% endblock %}
-
