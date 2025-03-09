@@ -23,7 +23,7 @@
                     <tr>
                         <td>R$ {{ boleto.valor|floatformat:2 }}</td>
                         <td>
-                            {% if boleto.vencimento %}
+                            {% if boleto.data_vencimento %}
                                 {{ boleto.vencimento|date:"d/m/Y" }}
                             {% else %}
                                 Não informado
@@ -42,7 +42,7 @@
                             <a href="{% url 'detalhar_boleto' boleto.id %}" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-eye"></i> Ver
                             </a>
-                            <a href="{% url 'baixar_boleto' boleto.id %}" class="btn btn-success btn-sm">
+                            <a href="{% url 'gerar_boleto' boleto.id %}" class="btn btn-success btn-sm">
                                 <i class="fas fa-download"></i> Baixar
                             </a>
                         </td>
