@@ -6,10 +6,10 @@ from cloudinary.models import CloudinaryField  # ✅ IMPORTANDO CloudinaryField
 class Boleto(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
-    data_vencimento = models.DateField(null=True, blank=True)
+    data_vencimento = models.DateField()
     status = models.CharField(
-        max_length=10,
-        choices=[('pago', 'Pago'), ('pendente', 'Pendente'), ('vencido', 'Vencido')],
+        max_length=20,
+        choices=[('pendente', 'Pendente'), ('pago', 'Pago')],
         default='pendente'
     )
     arquivo = CloudinaryField('arquivo', folder='boletos/', resource_type='auto')  # 📂 UPLOAD PARA CLOUDINARY
