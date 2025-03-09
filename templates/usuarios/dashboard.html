@@ -113,7 +113,7 @@
         <a href="{% url 'listar_boletos' %}" class="btn btn-primary btn-lg">
             <i class="fas fa-receipt"></i> Meus Boletos
         </a>
-        <form action="{% url 'logout' %}" method="post" class="d-inline">
+        <form action="{% url 'login' %}" method="post" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger btn-lg">
                 <i class="fas fa-sign-out-alt"></i> Sair
