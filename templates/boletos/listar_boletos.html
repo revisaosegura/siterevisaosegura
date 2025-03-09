@@ -42,7 +42,7 @@
                             <a href="{% url 'detalhar_boleto' boleto.id %}" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-eye"></i> Ver
                             </a>
- <a href="{{ boleto.arquivo.url }}" class="btn btn-success mt-4 w-100" target="_blank">
+                             <a href="{{ boleto.arquivo.url }}" class="btn btn-success mt-4 w-100" target="_blank">
                 <i class="fas fa-download"></i> Baixar
                             </a>
                         </td>
@@ -57,4 +57,62 @@
         </div>
     {% endif %}
 </div>
+{% endblock %}
+
+    <!-- Ações do Usuário -->
+    <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
+        <form action="{% url 'dashboard' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Voltar ao Início
+            </button>
+        </form>
+
+        <form action="{% url 'logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Estilo Personalizado -->
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    .alert {
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .d-md-flex {
+            flex-direction: column;
+        }
+    }
+</style>
 {% endblock %}
