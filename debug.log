@@ -2323,3 +2323,7 @@ File C:\Users\manyc\AppData\Local\Programs\Python\Python313\Lib\site-packages\wh
 2025-03-09 17:09:02,327 - DEBUG - File C:\Users\manyc\AppData\Local\Programs\Python\Python313\Lib\site-packages\whitenoise\media_types.py first seen with mtime 1740703006.0054178
 File C:\Users\manyc\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\sessions\backends\db.py first seen with mtime 1741440497.9707015
 2025-03-09 17:09:10,980 - DEBUG - File C:\Users\manyc\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\contrib\sessions\backends\db.py first seen with mtime 1741440497.9707015
+ALTER TABLE "boletos_boleto" ALTER COLUMN "data_vencimento" DROP NOT NULL; (params None)
+2025-03-09 18:36:58,426 - DEBUG - ALTER TABLE "boletos_boleto" ALTER COLUMN "data_vencimento" DROP NOT NULL; (params None)
+ALTER TABLE "boletos_boleto" ALTER COLUMN "status" TYPE varchar(10); (params None)
+2025-03-09 18:36:58,940 - DEBUG - ALTER TABLE "boletos_boleto" ALTER COLUMN "status" TYPE varchar(10); (params None)
