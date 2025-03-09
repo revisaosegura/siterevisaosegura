@@ -60,25 +60,46 @@
     </div>
     {% endif %}
 
-    <!-- 🔹 Lista de Documentos Enviados -->
-<div>
-    <h4>📂 Meus Documentos Enviados</h4>
-    {% for documento in documentos_enviados %}
-        <a href="{{ documento.arquivo.url }}">{{ documento.titulo }}</a>
-    {% empty %}
-        <p>Nenhum documento enviado.</p>
-    {% endfor %}
-</div>
+    <div class="card shadow-sm p-3 mb-4 bg-light rounded">
+        <h5 class="fw-bold"><i class="fas fa-folder-open"></i> Meus Documentos Enviados</h5>
+        <ul class="list-group">
+            {% for documento in documentos_cliente %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="fas fa-file-pdf text-danger"></i>
+                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.public_id }}</a>
+                        <span class="badge {% if documento.status == 'pendente' %}bg-warning{% elif documento.status == 'aprovado' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ documento.get_status_display }}
+                        </span>
+                    </span>
+                    <a href="{% url 'excluir_documento' documento.id %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i> Excluir
+                    </a>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center text-muted">Nenhum documento enviado.</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<!-- 🔹 Lista de Documentos Recebidos -->
-<div>
-    <h4>📥 Documentos Recebidos</h4>
-    {% for documento in documentos_recebidos %}
-        <a href="{{ documento.arquivo.url }}">{{ documento.titulo }}</a>
-    {% empty %}
-        <p>Nenhum documento recebido.</p>
-    {% endfor %}
-</div>
+    <div class="card shadow-sm p-3 mb-4 bg-light rounded">
+        <h5 class="fw-bold"><i class="fas fa-file-download"></i> Documentos Recebidos</h5>
+        <ul class="list-group">
+            {% for documento in documentos_admin %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="fas fa-file-pdf text-primary"></i>
+                        <a href="{{ documento.arquivo.url }}" target="_blank">{{ documento.arquivo.public_id }}</a>
+                    </span>
+                    <a href="{{ documento.arquivo.url }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-download"></i> Baixar
+                    </a>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center text-muted">Nenhum documento recebido.</li>
+            {% endfor %}
+        </ul>
+    </div>
 
     <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
         <a href="{% url 'perfil' %}" class="btn btn-info btn-lg">
@@ -118,4 +139,3 @@
     }
 </style>
 {% endblock %}
-
