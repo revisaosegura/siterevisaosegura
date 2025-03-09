@@ -22,15 +22,16 @@ def cadastro(request):
     return render(request, 'usuarios/cadastro.html', {'form': form})
 
 def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
             login(request, user)
-            return redirect('usuarios/dashboard.html')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'usuarios/login.html', {'form': form})
+            return redirect('dashboard')  # Certifique-se de que 'dashboard' está no seu `urls.py`
+        else:
+            messages.error(request, "Usuário ou senha inválidos.")
+    return render(request, "usuarios/login.html")
 
 @login_required
 def dashboard(request):
