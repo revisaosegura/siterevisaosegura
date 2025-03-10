@@ -16,7 +16,7 @@ def cadastro(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('usuarios/dashboard.html')
+            return redirect(reverse('dashboard'))  # 🔹 Corrigido
     else:
         form = UserRegisterForm()
     return render(request, 'usuarios/cadastro.html', {'form': form})
@@ -27,7 +27,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect(reverse('dashboard.html'))
+            return redirect(reverse('dashboard'))  # 🔹 Corrigido
     else:
         form = AuthenticationForm()
     return render(request, 'usuarios/login.html', {'form': form})
@@ -36,14 +36,11 @@ def login_view(request):
 def dashboard(request):
     form_cliente = DocumentoClienteForm()
     
-    # Pega todos os documentos que o usuário enviou
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
-
-    # Pega todos os documentos que o ADMIN enviou para esse usuário
     documentos_admin = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=False)
 
-    print(f"Usuário: {request.user}")  # Depuração
-    print(f"Documentos encontrados: {documentos_cliente}, {documentos_admin}")  # Depuração
+    print(f"Usuário: {request.user}")  
+    print(f"Documentos encontrados: {documentos_cliente}, {documentos_admin}")  
 
     return render(request, "usuarios/dashboard.html", {
         "form_cliente": form_cliente,
@@ -64,7 +61,7 @@ def editar_perfil(request):
         confirmar_senha = request.POST.get('confirmar_senha')
 
         if form.is_valid():
-            user = form.save(commit=False)  # Salva apenas se a senha estiver correta
+            user = form.save(commit=False)
 
             if senha_atual and nova_senha and confirmar_senha:
                 if not request.user.check_password(senha_atual):
@@ -74,13 +71,13 @@ def editar_perfil(request):
                 else:
                     user.set_password(nova_senha)
                     user.save()
-                    update_session_auth_hash(request, user)  # Mantém o usuário logado após a troca de senha
+                    update_session_auth_hash(request, user)
                     messages.success(request, 'Senha alterada com sucesso!')
-                    return redirect('perfil')
+                    return redirect(reverse('perfil'))
 
             messages.success(request, 'Perfil atualizado com sucesso!')
             user.save()
-            return redirect('usuarios/editar_perfil.html')
+            return redirect(reverse('editar_perfil'))  # 🔹 Corrigido
         else:
             messages.error(request, 'Por favor, corrija os erros abaixo.')
 
@@ -92,7 +89,7 @@ def editar_perfil(request):
 @login_required
 def upload_documento(request):
     if request.method == "POST":
-        form = DocumentoForm(request.POST, request.FILES)
+        form = DocumentoClienteForm(request.POST, request.FILES)
         if form.is_valid():
             documento = form.save(commit=False)
             documento.usuario = request.user
@@ -100,9 +97,9 @@ def upload_documento(request):
             messages.success(request, "Documento enviado com sucesso!")
         else:
             messages.error(request, "Erro ao enviar documento.")
-        return redirect('usuarios/dashboard.html')
+        return redirect(reverse('dashboard'))  # 🔹 Corrigido
 
-    form = DocumentoForm()
+    form = DocumentoClienteForm()
     documentos = Documento.objects.filter(usuario=request.user)
     return render(request, "usuarios/dashboard.html", {"form": form, "documentos": documentos})
 
@@ -116,7 +113,7 @@ def enviar_documento_cliente(request):
             documento.enviado_pelo_cliente = True  
             documento.status = "pendente"
 
-            # 🔹 Alteração no upload para aceitar PDFs corretamente
+            # 🔹 Upload para Cloudinary (aceitando PDFs corretamente)
             resultado = cloudinary.uploader.upload(
                 request.FILES['arquivo'],
                 resource_type="raw"  # 🔹 Define como "raw" para aceitar PDFs
@@ -127,7 +124,7 @@ def enviar_documento_cliente(request):
             messages.success(request, "Documento enviado com sucesso!")
         else:
             messages.error(request, "Erro ao enviar o documento. Verifique o arquivo.")
-        return redirect(reverse('dashboard'))  # ✅ Correção no redirecionamento
+        return redirect(reverse('dashboard'))  # 🔹 Corrigido
 
     form_cliente = DocumentoClienteForm()
     documentos_cliente = Documento.objects.filter(usuario=request.user, enviado_pelo_cliente=True)
@@ -149,11 +146,9 @@ def excluir_documento(request, documento_id):
     else:
         messages.error(request, "Você não tem permissão para excluir este documento.")
 
-    return redirect(reverse('dashboard'))  # ✅ Correção no redirecionamento
+    return redirect(reverse('dashboard'))  # 🔹 Corrigido
 
 def logout_view(request):
     logout(request)
-    return redirect('login.html')
-
-
+    return redirect(reverse('login'))  # 🔹 Corrigido
 
