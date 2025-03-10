@@ -27,10 +27,10 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('usuarios/login.html')
+            return redirect('usuarios/dashboard.html')
     else:
         form = AuthenticationForm()
-    return render(request, 'usuarios/dashboard.html', {'form': form})
+    return render(request, 'usuarios/login.html', {'form': form})
 
 @login_required
 def dashboard(request):
