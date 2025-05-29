@@ -122,12 +122,12 @@ REST_FRAMEWORK = {
 
 # 🔹 Configuração de envio de e-mails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='contato@revisaosegura.com.br')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='sua_senha')
-DEFAULT_FROM_EMAIL = 'Revisão Segura <contato@revisaosegura.com.br>'
+EMAIL_HOST_USER = 'contato@revisaosegura.com.br', 'cadastro@revisaosegura.com.br'  # ou o e-mail que você usa no Zoho
+EMAIL_HOST_PASSWORD = '8YGnRdqRkJYC'  # senha real ou senha de aplicativo
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # 🔹 Configuração de segurança
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)

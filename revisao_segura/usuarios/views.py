@@ -153,57 +153,32 @@ def logout_view(request):
     logout(request)
     return redirect(reverse('login'))  # 🔹 Corrigido
 
-def calculo_view(request):
+def contato_view(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
-        whatsapp = request.POST.get('whatsapp')
         email = request.POST.get('email')
-        valor_total = request.POST.get('valor_total')
-        qtd_parcelas = request.POST.get('qtd_parcelas')
-        parcelas_pagas = request.POST.get('parcelas_pagas')
-        valor_parcela = request.POST.get('valor_parcela')
+        celular = request.POST.get('Celular')
         mensagem = request.POST.get('mensagem')
 
-        # ✅ Salva no admin
-        CalculoRevisional.objects.create(
-            nome=nome,
-            whatsapp=whatsapp,
-            email=email,
-            valor_total=valor_total,
-            qtd_parcelas=qtd_parcelas,
-            parcelas_pagas=parcelas_pagas,
-            valor_parcela=valor_parcela,
-            mensagem=mensagem
-        )
-
-        # ✅ Monta o conteúdo do e-mail
-        assunto = '📋 Nova Solicitação de Cálculo Revisional'
+        assunto = 'Nova Mensagem de Contato pelo Site'
         corpo = f"""
-Nova ficha recebida:
+Mensagem recebida pelo formulário de contato:
 
-📌 Nome: {nome}
-📞 WhatsApp: {whatsapp}
-📧 E-mail: {email}
-💰 Valor do Contrato: {valor_total}
-📆 Total de Parcelas: {qtd_parcelas}
-✅ Parcelas Pagas: {parcelas_pagas}
-💳 Valor das Parcelas: {valor_parcela}
-📝 Mensagem: {mensagem or '---'}
+Nome: {nome}
+E-mail: {email}
+Celular: {celular}
+Mensagem: {mensagem}
 """.strip()
 
-        # ✅ Envia por e-mail para ficha@revisaosegura.com.br
-        try:
-            send_mail(
-                subject=assunto,
-                message=corpo,
-                from_email=None,  # usa DEFAULT_FROM_EMAIL do settings
-                recipient_list=['cadastro@revisaosegura.com.br'],
-                fail_silently=False,
-            )
-        except Exception as e:
-            print(f'Erro ao enviar e-mail: {e}')
+        send_mail(
+            assunto,
+            corpo,
+            'no-reply@revisaosegura.com.br',
+            ['contato@revisaosegura.com.br'],
+            fail_silently=False,
+        )
 
-        messages.success(request, 'Solicitação enviada com sucesso! Entraremos em contato pelo WhatsApp em breve.')
-        return redirect('/calculo/')
+        messages.success(request, 'Mensagem enviada com sucesso! Em breve responderemos.')
+        return redirect('/contato/')
 
-    return render(request, 'calculo.html')
+    return render(request, 'contato.html')
