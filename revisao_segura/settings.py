@@ -125,7 +125,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'contato@revisaosegura.com.br', 'cadastro@revisaosegura.com.br'  # ou o e-mail que você usa no Zoho
+EMAIL_HOST_USER = 'contato@revisaosegura.com.br' # ou o e-mail que você usa no Zoho
 EMAIL_HOST_PASSWORD = '8YGnRdqRkJYC'  # senha real ou senha de aplicativo
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
