@@ -114,6 +114,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
                     <li class="nav-item"><a class="nav-link" href="/sobre/">Sobre Nós</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/servicos/">Nossos Serviços</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/calculo/">Solicitar Cálculo</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contato/">Contato</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link btn btn-warning text-dark px-3 ms-2 btn-responsive" href="/usuarios/dashboard/">Área do Cliente</a></li>
@@ -130,7 +132,7 @@
     <div class="hero">
         <h1>Elimine Juros Abusivos Agora!</h1>
         <p>Te ajudamos a recuperar valores cobrados indevidamente em financiamentos, empréstimos e contratos.</p>
-    <button onclick="window.location.href='/contato/'">Fale Conosco</button>
+    <button onclick="abrirFormulario()">Solicitar Cálculo</button>
     </div>
 
     <div class="features">
@@ -181,4 +183,66 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<!-- Botão que abre o formulário -->
+{% if request.path == "/" %}
+<script>
+    function abrirFormulario() {
+        var modal = new bootstrap.Modal(document.getElementById('formModal'));
+        modal.show();
+    }
+</script>
 
+<!-- Modal com formulário -->
+<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formModalLabel">Simule sua Revisão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="/solicitar-calculo/">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nome completo</label>
+              <input type="text" name="nome" class="form-control" placeholder="ex: José da Silva" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Número do Whatsapp</label>
+              <input type="text" name="whatsapp" class="form-control" placeholder="ex: (11) 98888-8888" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Seu Melhor E-mail</label>
+              <input type="email" name="email" class="form-control" placeholder="ex: seu@email.com.br" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Valor do Empréstimo ou Financiamento</label>
+              <input type="text" name="valor_total" class="form-control" placeholder="ex: 50.000,00" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Quantidade Total de Parcelas</label>
+              <input type="number" name="qtd_parcelas" class="form-control" placeholder="ex: 48" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Quantidade de Parcelas Pagas</label>
+              <input type="number" name="parcelas_pagas" class="form-control" placeholder="ex: 17" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Valor das Parcelas</label>
+              <input type="text" name="valor_parcela" class="form-control" placeholder="ex: 2.200,00" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Mensagem</label>
+              <textarea name="mensagem" class="form-control" rows="3" placeholder="Tenho um financiamento feito no banco Itaú e estou com parcelas atrasadas."></textarea>
+            </div>
+          </div>
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg w-100">SOLICITAR CÁLCULO</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

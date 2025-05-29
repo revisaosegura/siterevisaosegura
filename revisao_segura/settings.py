@@ -23,7 +23,9 @@ ROOT_URLCONF = "revisao_segura.urls"
 
 # 🔹 Configuração do Banco de Dados PostgreSQL
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://siterevisaosegura_db_user:kmMn1GLtxNluXUOEY1TvJZyOxIiZJCHx@dpg-cv0g1dlsvqrc738r0r4g-a.oregon-postgres.render.com/siterevisaosegura_db')
+    'default': dj_database_url.parse(
+        'postgresql://revisao_user:wReqJqaDOzMkVy8uayvgjywRFblPQOwx@dpg-d0n2itt6ubrc73a1mhkg-a.oregon-postgres.render.com/revisao'
+    )
 }
 
 # Debug: Mostrar a configuração do banco
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     # Aplicativos internos
     'revisao_segura.usuarios',
     'revisao_segura.boletos',
+    'revisao_segura',
 ]
 
 # 🔹 Middlewares

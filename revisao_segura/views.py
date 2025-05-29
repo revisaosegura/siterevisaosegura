@@ -27,6 +27,16 @@ def contato(request):
 
     return render(request, "contato.html")
 
+def calculo_view(request):
+    if request.method == 'POST':
+        # você pode personalizar isso depois
+        messages.success(request, 'Solicitação enviada com sucesso!')
+        return redirect('calculo')  # ou outra URL
+    return render(request, 'calculo.html')
+
+def servicos(request):
+    return render(request, 'servicos.html')
+
 def upload_documento(request):
     if request.method == 'POST' and request.FILES.get('file'):
         arquivo = request.FILES['file']

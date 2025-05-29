@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Solicitar Cálculo | Revisão Segura{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5 p-4 bg-white rounded shadow-sm">
+    <h2 class="text-center mb-4">Simulação de Cálculo Revisional</h2>
+    <form method="post" action="/calculo/">
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Nome completo</label>
+                <input type="text" name="nome" class="form-control" placeholder="ex: José da Silva" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Número do Whatsapp</label>
+                <input type="text" name="whatsapp" class="form-control" placeholder="ex: (11) 98888-8888" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Seu Melhor E-mail</label>
+                <input type="email" name="email" class="form-control" placeholder="ex: seu@email.com.br" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Valor do Empréstimo ou Financiamento</label>
+                <input type="text" name="valor_total" class="form-control" placeholder="ex: 50.000,00" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Quantidade Total de Parcelas</label>
+                <input type="number" name="qtd_parcelas" class="form-control" placeholder="ex: 48" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Quantidade de Parcelas Pagas</label>
+                <input type="number" name="parcelas_pagas" class="form-control" placeholder="ex: 17" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Valor das Parcelas</label>
+                <input type="text" name="valor_parcela" class="form-control" placeholder="ex: 2.200,00" required>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Mensagem</label>
+                <textarea name="mensagem" class="form-control" rows="4" placeholder="Tenho um financiamento feito no banco Itaú e estou com parcelas atrasadas."></textarea>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg w-100">SOLICITAR CÁLCULO</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

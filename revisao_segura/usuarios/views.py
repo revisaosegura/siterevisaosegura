@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.urls import reverse
 import cloudinary.uploader
+from .models import CalculoRevisional
 
 def cadastro(request):
     if request.method == 'POST':
@@ -152,3 +153,60 @@ def logout_view(request):
     logout(request)
     return redirect(reverse('login'))  # 🔹 Corrigido
 
+def enviar_para_telegram(token, chat_ids, mensagem):
+    for chat_id in chat_ids:
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        payload = {
+            "chat_id": chat_id,
+            "text": mensagem,
+            "parse_mode": "Markdown"
+        }
+        try:
+            requests.post(url, json=payload)
+        except Exception as e:
+            print(f"Erro ao enviar para o Telegram: {e}")
+
+def calculo_view(request):
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        whatsapp = request.POST.get('whatsapp')
+        email = request.POST.get('email')
+        valor_total = request.POST.get('valor_total')
+        qtd_parcelas = request.POST.get('qtd_parcelas')
+        parcelas_pagas = request.POST.get('parcelas_pagas')
+        valor_parcela = request.POST.get('valor_parcela')
+        mensagem = request.POST.get('mensagem')
+
+        # ✅ Salva no admin
+        CalculoRevisional.objects.create(
+            nome=nome,
+            whatsapp=whatsapp,
+            email=email,
+            valor_total=valor_total,
+            qtd_parcelas=qtd_parcelas,
+            parcelas_pagas=parcelas_pagas,
+            valor_parcela=valor_parcela,
+            mensagem=mensagem
+        )
+
+        # ✅ Envia a ficha para o Telegram
+        token = "SEU_TOKEN_DO_BOT"
+        chat_ids = ["SEU_CHAT_ID"]  # pode ser uma lista com 1 ou mais IDs
+        texto = f"""
+*Nova Solicitação de Cálculo Revisional*
+📌 *Nome:* {nome}
+📞 *WhatsApp:* {whatsapp}
+📧 *E-mail:* {email}
+💰 *Valor do Contrato:* {valor_total}
+📆 *Total de Parcelas:* {qtd_parcelas}
+✅ *Parcelas Pagas:* {parcelas_pagas}
+💳 *Valor das Parcelas:* {valor_parcela}
+📝 *Mensagem:* {mensagem or '---'}
+""".strip()
+
+        enviar_para_telegram(token, chat_ids, texto)
+
+        messages.success(request, 'Solicitação enviada com sucesso! Entraremos em contato pelo WhatsApp em breve.')
+        return redirect('/calculo/')
+
+    return render(request, 'calculo.html')

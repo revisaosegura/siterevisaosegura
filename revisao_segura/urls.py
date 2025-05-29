@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from revisao_segura.views import home, sobre, contato, upload_documento
+from revisao_segura.views import home, sobre, contato, upload_documento, calculo_view, servicos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,6 +12,8 @@ urlpatterns = [
     path('usuarios/', include ('revisao_segura.usuarios.urls')),
     path('boletos/', include ('revisao_segura.boletos.urls')),
     path('upload/', upload_documento, name='upload_documento'),
+    path('calculo/', calculo_view, name='calculo'),
+    path('servicos/', servicos, name='servicos'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Configuração para servir arquivos estáticos e de mídia em ambiente de desenvolvimento
