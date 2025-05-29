@@ -116,6 +116,7 @@
                     <li class="nav-item"><a class="nav-link" href="/sobre/">Sobre Nós</a></li>
                     <li class="nav-item"><a class="nav-link" href="/servicos/">Nossos Serviços</a></li>
                     <li class="nav-item"><a class="nav-link" href="/calculo/">Solicitar Cálculo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/calculo/">Simular Empréstimo</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contato/">Contato</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link btn btn-warning text-dark px-3 ms-2 btn-responsive" href="/usuarios/dashboard/">Área do Cliente</a></li>
@@ -153,6 +154,19 @@
         <h5 class="mt-3 fw-bold">Resultados Comprovados</h5>
         <p>Mais de R$ 10 milhões recuperados para nossos clientes. Redução de parcelas, cancelamento de dívidas e devolução de valores pagos a mais.</p>
     </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-success p-4 text-center shadow-sm" style="font-size: 1.2rem;">
+            <strong>NOVIDADE:</strong> Agora também oferecemos <strong>empréstimos consignados em parceria com grandes empresas</strong>! E o melhor: <span class="text-danger fw-bold">mesmo negativados podem contratar</span>, sem precisar apresentar bens como garantia.
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <a href="/simule/" class="btn btn-success btn-lg fw-bold shadow">
+        <i class="bi bi-calculator"></i> Solicitar Simulação de Empréstimo
+    </a>
 </div>
 
 <div class="mt-5 text-center">

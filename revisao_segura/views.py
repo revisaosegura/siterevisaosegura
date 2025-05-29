@@ -5,6 +5,7 @@ import cloudinary.uploader
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import CalculoRevisional
+from .models import SimulacaoEmprestimo
 
 def home(request):
     return render(request, 'home.html')
@@ -89,6 +90,49 @@ Mensagem: {mensagem or "Nenhuma"}
         return redirect('/calculo/')
     
     return render(request, 'calculo.html')
+
+def simulacao_view(request):
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        whatsapp = request.POST.get('whatsapp')
+        email = request.POST.get('email')
+        situacao_profissional = request.POST.get('situacao_profissional')
+        valor_total = request.POST.get('valor_total')
+        renda_mensal = request.POST.get('renda_mensal')
+        mensagem = request.POST.get('mensagem')
+
+        SimulacaoEmprestimo.objects.create(
+            nome=nome,
+            whatsapp=whatsapp,
+            email=email,
+            situacao_profissional=situacao_profissional,
+            valor_total=valor_total,
+            renda_mensal=renda_mensal,
+            mensagem=mensagem
+        )
+
+        send_mail(
+            subject='Nova Simulação de Empréstimo',
+            message=f'''
+Nova simulação recebida:
+
+Nome: {nome}
+WhatsApp: {whatsapp}
+E-mail: {email}
+Situação profissional: {situacao_profissional}
+Valor solicitado: {valor_total}
+Renda mensal: {renda_mensal}
+Mensagem: {mensagem or "Nenhuma"}
+            ''',
+            from_email='contato@revisaosegura.com.br',
+            recipient_list=['cadastro@revisaosegura.com.br'],
+            fail_silently=False,
+        )
+
+        messages.success(request, 'Simulação enviada com sucesso!')
+        return redirect('/simule/')
+    
+    return render(request, 'simule.html')
 
 def servicos(request):
     return render(request, 'servicos.html')

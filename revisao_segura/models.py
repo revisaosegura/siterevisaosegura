@@ -18,3 +18,16 @@ class CalculoRevisional(models.Model):
 
     def __str__(self):
         return self.nome
+
+class SimulacaoEmprestimo(models.Model):
+    nome = models.CharField(max_length=255)
+    email = models.EmailField()
+    whatsapp = models.CharField(max_length=20)
+    situacao_profissional = models.CharField(max_length=50)
+    valor_total = models.CharField(max_length=30)
+    renda_mensal = models.CharField(max_length=30)
+    mensagem = models.TextField(blank=True, null=True)
+    data_envio = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.nome} - {self.email}"

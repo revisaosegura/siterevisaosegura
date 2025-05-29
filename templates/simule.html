@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Simular Empréstimo - Revisão Segura{% endblock %}
+
+{% block content %}
+<!-- Seção Hero -->
+<div class="hero bg-dark text-white text-center py-5" style="background: url('/static/images/simule.jpg') center/cover no-repeat; height: 300px; display: flex; align-items: center; justify-content: center;">
+    <h1 class="fw-bold text-shadow">Simule seu Empréstimo</h1>
+</div>
+
+<div class="container mt-5">
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Lado esquerdo com texto -->
+        <div class="col-md-5">
+            <div class="bg-light p-4 rounded shadow">
+                <h4 class="text-dark fw-bold">Quer contratar um empréstimo com segurança?</h4>
+                <p>Preencha os dados abaixo e simule agora mesmo. Atendemos negativados, sem necessidade de garantia, com taxas reduzidas e liberação rápida.</p>
+                <img src="/static/images/emprestimo.jpg" alt="Simular Empréstimo" class="img-fluid rounded mt-3">
+            </div>
+        </div>
+
+        <!-- Lado direito com formulário -->
+        <div class="col-md-7">
+            <div class="bg-white p-4 rounded shadow">
+                <h4 class="fw-bold mb-4">Formulário de Simulação</h4>
+                <form method="post" action="/simular/">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nome completo</label>
+                        <input type="text" name="nome" class="form-control" placeholder="Seu nome completo" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">E-mail</label>
+                        <input type="email" name="email" class="form-control" placeholder="exemplo@email.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">WhatsApp</label>
+                        <input type="text" name="whatsapp" class="form-control" placeholder="(11) 91234-5678" required>
+                    </div>
+
+			<div class="mb-3">
+ 			   <label class="form-label fw-bold">Situação profissional</label>
+  			  <select name="situacao_profissional" class="form-select" required>
+  		      <option value="" disabled selected>Selecione sua situação profissional</option>
+ 		       <option value="aposentado">Aposentado</option>
+		        <option value="assalariado">Assalariado</option>
+		        <option value="autonomo">Autônomo</option>
+	        <option value="empresario">Empresário</option>
+	        <option value="funcionario_publico">Funcionário Público</option>
+	        <option value="funcionario_publico">Profissional Liberal</option>
+ 	       <option value="pensionista">Pensionista</option>
+	        <option value="desempregado">Desempregado</option>
+ 	       <option value="outro">Outro</option>
+ 			   </select>
+			</div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">De quanto você precisa?</label>
+                        <input type="text" name="valor_total" class="form-control" placeholder="Ex: 50.000,00" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Renda Mensal</label>
+                        <input type="text" name="valor_total" class="form-control" placeholder="Ex: 50.000,00" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mensagem</label>
+                        <textarea name="mensagem" class="form-control" rows="4" placeholder="Escreva aqui qualquer informação adicional."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg w-100 fw-bold">
+                        <i class="bi bi-calculator-fill"></i> Simular Empréstimo
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

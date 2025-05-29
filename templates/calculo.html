@@ -48,8 +48,16 @@
                         <label class="form-label"><i class="fas fa-envelope text-success"></i> E-mail:</label>
                         <input type="email" name="email" class="form-control" placeholder="ex: seu@email.com.br" required>
                     </div>
+		<div class="mb-3">
+   			 <label class="form-label"><i class="fas fa-hand-holding-usd text-success"></i> Tipo de Contrato:</label>
+    			<select name="tipo_contrato" class="form-select" required>
+   		     <option value="" disabled selected>Selecione uma opção</option>
+   		     <option value="financiamento">Financiamento</option>
+    		    <option value="emprestimo">Empréstimo</option>
+ 	   </select>
+			</div>
                     <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-dollar-sign text-success"></i> Valor do Empréstimo:</label>
+                        <label class="form-label"><i class="fas fa-dollar-sign text-success"></i> Valor:</label>
                         <input type="text" name="valor_total" class="form-control" placeholder="ex: 50.000,00" required>
                     </div>
                     <div class="mb-3">
