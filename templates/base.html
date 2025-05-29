@@ -245,11 +245,24 @@
             </div>
           </div>
           <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success btn-lg w-100">SOLICITAR CÁLCULO</button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <button type="submit">Enviar Solicitação</button>
+    </form>
   </div>
 </div>
+
+<script>
+function abrirFormulario() {
+  document.getElementById('formularioModal').style.display = 'block';
+}
+function fecharFormulario() {
+  document.getElementById('formularioModal').style.display = 'none';
+}
+// Fecha o modal clicando fora do conteúdo
+window.onclick = function(event) {
+  var modal = document.getElementById('formularioModal');
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 {% endif %}

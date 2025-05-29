@@ -4,6 +4,7 @@ from django.http import JsonResponse
 import cloudinary.uploader
 from django.core.mail import send_mail
 from django.conf import settings
+from .models import CalculoRevisional
 
 def home(request):
     return render(request, 'home.html')
@@ -52,7 +53,7 @@ def calculo_view(request):
         valor_parcela = request.POST.get('valor_parcela')
         mensagem = request.POST.get('mensagem')
 
-        # ✅ Salva no admin
+        # ✅ Salva a ficha no banco (vai aparecer no admin)
         CalculoRevisional.objects.create(
             nome=nome,
             whatsapp=whatsapp,
@@ -64,32 +65,29 @@ def calculo_view(request):
             mensagem=mensagem
         )
 
-        # ✅ Envia por e-mail
-        assunto = 'Nova Solicitação de Cálculo Revisional'
-        corpo = f"""
-Nova ficha de cálculo enviada pelo site:
+        # ✅ Envia o e-mail para a caixa de cadastro
+        send_mail(
+            subject='Nova Solicitação de Cálculo',
+            message=f'''
+Nova ficha de cálculo recebida:
 
 Nome: {nome}
 WhatsApp: {whatsapp}
 E-mail: {email}
-Valor do Contrato: {valor_total}
-Total de Parcelas: {qtd_parcelas}
-Parcelas Pagas: {parcelas_pagas}
-Valor das Parcelas: {valor_parcela}
-Mensagem: {mensagem or '---'}
-""".strip()
-
-        send_mail(
-            assunto,
-            corpo,
-            'no-reply@revisaosegura.com.br',
-            ['cadastro@revisaosegura.com.br'],
+Valor do contrato: {valor_total}
+Quantidade de parcelas: {qtd_parcelas}
+Parcelas pagas: {parcelas_pagas}
+Valor da parcela: {valor_parcela}
+Mensagem: {mensagem or "Nenhuma"}
+            ''',
+            from_email='contato@revisaosegura.com.br',
+            recipient_list=['cadastro@revisaosegura.com.br'],
             fail_silently=False,
         )
 
-        messages.success(request, 'Solicitação enviada com sucesso! Entraremos em contato pelo WhatsApp em breve.')
+        messages.success(request, 'Solicitação enviada com sucesso!')
         return redirect('/calculo/')
-
+    
     return render(request, 'calculo.html')
 
 def servicos(request):

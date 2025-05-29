@@ -14,6 +14,7 @@ urlpatterns = [
     path('upload/', upload_documento, name='upload_documento'),
     path('calculo/', calculo_view, name='calculo'),
     path('servicos/', servicos, name='servicos'),
+    path('solicitar-calculo/', calculo_view, name='solicitar_calculo'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Configuração para servir arquivos estáticos e de mídia em ambiente de desenvolvimento
