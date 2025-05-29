@@ -3,60 +3,95 @@
 {% block title %}Serviços | Revisão Segura{% endblock %}
 
 {% block content %}
-<div class="container mt-5 mb-5 bg-white p-4 rounded shadow-sm">
 
-    <h2 class="text-center mb-4">Como Funciona a Revisão de Juros Abusivos</h2>
+<!-- Banner Hero -->
+<div class="hero bg-dark text-white text-center py-5" style="background: url('/static/images/revisao.jpg') center/cover no-repeat; height: 300px; display: flex; align-items: center; justify-content: center;">
+    <h1 class="fw-bold text-shadow">Nossos Serviços</h1>
+</div>
 
-    <p>A revisão contratual é um direito garantido ao consumidor quando há cobrança de juros abusivos em financiamentos, empréstimos ou contratos bancários. Nossa equipe especializada analisa seu contrato, identifica irregularidades e propõe as medidas judiciais cabíveis para a eliminação dos juros excessivos e recuperação de valores pagos indevidamente.</p>
+<div class="container mt-5">
 
-    <hr class="my-5">
-
-    <h3 class="text-center mb-4">Quem pode solicitar a revisão?</h3>
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <i class="fas fa-car fa-3x text-success mb-3"></i>
-            <h5>Financiamento de Veículos</h5>
-            <p>Carros, motos, caminhões e utilitários com parcelas abusivas.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <i class="fas fa-home fa-3x text-success mb-3"></i>
-            <h5>Empréstimos Consignados</h5>
-            <p>Principalmente aposentados, pensionistas e servidores públicos.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <i class="fas fa-money-bill-wave fa-3x text-success mb-3"></i>
-            <h5>Crédito Pessoal ou Cartão</h5>
-            <p>Revisamos contratos de cartão de crédito, cheque especial e CDC.</p>
-        </div>
+    <!-- Introdução -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Protegendo seu bolso com estratégia e justiça</h2>
+        <p class="lead">Na <strong>Revisão Segura</strong>, ajudamos você a reverter cobranças indevidas e reduzir dívidas com segurança jurídica e agilidade.</p>
     </div>
 
-    <hr class="my-5">
-
-    <h3 class="text-center mb-4">Etapas do Processo</h3>
-    <div class="row text-center">
-        <div class="col-md-3 col-6 mb-4">
-            <i class="fas fa-file-alt fa-2x text-success mb-2"></i>
-            <p><strong>1. Envio dos dados</strong><br>Você preenche o formulário com seus dados e informações do contrato.</p>
-        </div>
-        <div class="col-md-3 col-6 mb-4">
-            <i class="fas fa-search-dollar fa-2x text-success mb-2"></i>
-            <p><strong>2. Análise técnica</strong><br>Fazemos uma análise gratuita para identificar juros abusivos.</p>
-        </div>
-        <div class="col-md-3 col-6 mb-4">
-            <i class="fas fa-balance-scale fa-2x text-success mb-2"></i>
-            <p><strong>3. Início da ação</strong><br>Após aprovação, ingressamos com a ação judicial.</p>
-        </div>
-        <div class="col-md-3 col-6 mb-4">
-            <i class="fas fa-hand-holding-usd fa-2x text-success mb-2"></i>
-            <p><strong>4. Recuperação de valores</strong><br>Buscamos a devolução de valores e a redução das parcelas.</p>
-        </div>
+<!-- Seção: Entenda os Juros Abusivos -->
+<hr class="my-5">
+<div class="text-center">
+    <h3 class="fw-bold mb-4">O que são Juros Abusivos?</h3>
+</div>
+<div class="row align-items-center mb-5">
+    <div class="col-md-6 mb-4">
+        <p class="fs-5">
+            Juros abusivos são cobranças exageradas feitas por bancos e financeiras, acima do que é considerado justo pelo Banco Central. Muitos brasileiros pagam <strong>até o dobro do valor real do financiamento</strong> sem saber que estão sendo lesados.
+        </p>
+        <p class="fs-5">
+            Em contratos como financiamento de veículos, crédito consignado, cartão de crédito e empréstimos pessoais, essas taxas são comuns — e ilegais. Se você sente que está pagando demais, é hora de revisar seu contrato.
+        </p>
+        <p class="fs-5 fw-bold text-success">
+            A boa notícia? A Justiça tem dado ganho de causa para quem entra com ação para reduzir ou anular essas cobranças!
+        </p>
     </div>
+    <div class="col-md-6">
+        <img src="/static/images/revisao.jpg" class="img-fluid rounded shadow" alt="Juros Abusivos">
+    </div>
+</div>
 
-    <hr class="my-5">
-
+    <!-- Quem Pode Solicitar -->
     <div class="text-center">
-        <a href="/calculo/" class="btn btn-success btn-lg">Quero Simular Meu Cálculo</a>
+        <h3 class="fw-bold mb-4">Quem Pode Solicitar?</h3>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <i class="bi bi-truck-front-fill text-success" style="font-size: 3rem;"></i>
+            <h5 class="fw-bold mt-3">Financiamento de Veículos</h5>
+            <p>Parcelas abusivas em carros, motos ou caminhões? Podemos ajudar você a reduzir.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="bi bi-person-bounding-box text-success" style="font-size: 3rem;"></i>
+            <h5 class="fw-bold mt-3">Empréstimos Consignados</h5>
+            <p>Se você é aposentado, pensionista ou servidor, revise seus contratos e recupere valores.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="bi bi-credit-card-2-front-fill text-success" style="font-size: 3rem;"></i>
+            <h5 class="fw-bold mt-3">Cartões e Crédito Pessoal</h5>
+            <p>Reduzimos juros abusivos em cartões, cheque especial e CDCs.</p>
+        </div>
+    </div>
+
+    <!-- Etapas -->
+    <hr class="my-5">
+    <div class="text-center">
+        <h3 class="fw-bold mb-4">Etapas do Nosso Processo</h3>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-3 col-6 mb-4">
+            <i class="bi bi-ui-checks text-success" style="font-size: 2rem;"></i>
+            <p><strong>1. Formulário</strong><br>Preencha seus dados e envie os documentos.</p>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+            <i class="bi bi-search text-success" style="font-size: 2rem;"></i>
+            <p><strong>2. Análise Gratuita</strong><br>Verificamos se há cobranças indevidas no seu contrato.</p>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+            <i class="bi bi-file-earmark-text text-success" style="font-size: 2rem;"></i>
+            <p><strong>3. Ação Judicial</strong><br>Ingressamos com a ação e buscamos seus direitos.</p>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+            <i class="bi bi-cash-stack text-success" style="font-size: 2rem;"></i>
+            <p><strong>4. Redução/Recuperação</strong><br>Reduzimos parcelas e buscamos devolução de valores pagos a mais.</p>
+        </div>
+    </div>
+
+    <!-- Chamada para Ação -->
+    <div class="text-center mt-5">
+        <a href="/calculo/" class="btn btn-success btn-lg fw-bold shadow">
+            <i class="bi bi-calculator"></i> Quero Simular Meu Cálculo
+        </a>
     </div>
 
 </div>
+
 {% endblock %}

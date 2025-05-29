@@ -1,49 +1,77 @@
 {% extends "base.html" %}
 
-{% block title %}Solicitar Cálculo | Revisão Segura{% endblock %}
+{% block title %}Solicitar Cálculo - Revisão Segura{% endblock %}
 
 {% block content %}
-<div class="container mt-5 mb-5 p-4 bg-white rounded shadow-sm">
-    <h2 class="text-center mb-4">Simulação de Cálculo Revisional</h2>
-    <form method="post" action="/calculo/">
-        {% csrf_token %}
-        <div class="row g-3">
-            <div class="col-md-6">
-                <label class="form-label">Nome completo</label>
-                <input type="text" name="nome" class="form-control" placeholder="ex: José da Silva" required>
+<!-- Seção Hero com Banner -->
+<div class="hero bg-dark text-white text-center py-5" style="background: url('/static/images/calculo.jpg') center/cover no-repeat; height: 300px; display: flex; align-items: center; justify-content: center;">
+    <h1 class="fw-bold text-shadow">Solicite seu Cálculo</h1>
+</div>
+
+<div class="container mt-5">
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Número do Whatsapp</label>
-                <input type="text" name="whatsapp" class="form-control" placeholder="ex: (11) 98888-8888" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Seu Melhor E-mail</label>
-                <input type="email" name="email" class="form-control" placeholder="ex: seu@email.com.br" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Valor do Empréstimo ou Financiamento</label>
-                <input type="text" name="valor_total" class="form-control" placeholder="ex: 50.000,00" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Quantidade Total de Parcelas</label>
-                <input type="number" name="qtd_parcelas" class="form-control" placeholder="ex: 48" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Quantidade de Parcelas Pagas</label>
-                <input type="number" name="parcelas_pagas" class="form-control" placeholder="ex: 17" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Valor das Parcelas</label>
-                <input type="text" name="valor_parcela" class="form-control" placeholder="ex: 2.200,00" required>
-            </div>
-            <div class="col-12">
-                <label class="form-label">Mensagem</label>
-                <textarea name="mensagem" class="form-control" rows="4" placeholder="Tenho um financiamento feito no banco Itaú e estou com parcelas atrasadas."></textarea>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Coluna de Imagem e Informativo -->
+        <div class="col-md-5">
+            <div class="bg-light p-4 rounded shadow">
+                <h4 class="text-dark fw-bold">O que é Cálculo Revisional?</h4>
+                <p>Informe seus dados e simule a revisão do seu contrato de financiamento ou empréstimo. Nossa equipe vai analisar e entrar em contato.</p>
+                <img src="/static/images/calculo.jpg" alt="Cálculo Revisional" class="img-fluid rounded mt-3">
             </div>
         </div>
-        <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success btn-lg w-100">SOLICITAR CÁLCULO</button>
+
+        <!-- Coluna do Formulário -->
+        <div class="col-md-7">
+            <div class="bg-white p-4 rounded shadow">
+                <h4 class="fw-bold">Formulário de Solicitação</h4>
+                <form method="post" action="/calculo/">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-user text-success"></i> Nome completo:</label>
+                        <input type="text" name="nome" class="form-control" placeholder="ex: José da Silva" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fab fa-whatsapp text-success"></i> WhatsApp:</label>
+                        <input type="text" name="whatsapp" class="form-control" placeholder="ex: (11) 98888-8888" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-envelope text-success"></i> E-mail:</label>
+                        <input type="email" name="email" class="form-control" placeholder="ex: seu@email.com.br" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-dollar-sign text-success"></i> Valor do Empréstimo:</label>
+                        <input type="text" name="valor_total" class="form-control" placeholder="ex: 50.000,00" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-list-ol text-success"></i> Total de Parcelas:</label>
+                        <input type="number" name="qtd_parcelas" class="form-control" placeholder="ex: 48" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-check-double text-success"></i> Parcelas Pagas:</label>
+                        <input type="number" name="parcelas_pagas" class="form-control" placeholder="ex: 17" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-money-bill text-success"></i> Valor das Parcelas:</label>
+                        <input type="text" name="valor_parcela" class="form-control" placeholder="ex: 2.200,00" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-comment text-success"></i> Mensagem:</label>
+                        <textarea name="mensagem" class="form-control" rows="4" placeholder="Escreva aqui alguma informação adicional."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 fw-bold">Solicitar Cálculo</button>
+                </form>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 {% endblock %}
