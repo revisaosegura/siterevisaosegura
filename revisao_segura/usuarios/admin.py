@@ -3,6 +3,10 @@ from django.contrib.auth.admin import UserAdmin
 from revisao_segura.usuarios.models import Usuario  # 🔹 Correção da importação
 from .models import Documento, CalculoRevisional
 
+class CalculoRevisionalAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'whatsapp', 'email', 'criado_em']
+    search_fields = ['nome', 'whatsapp', 'email']
+    
 class UsuarioAdmin(UserAdmin):
     model = Usuario
     fieldsets = UserAdmin.fieldsets + (
@@ -17,7 +21,3 @@ class DocumentoAdmin(admin.ModelAdmin):
     list_filter = ("status", "enviado_pelo_cliente")
     search_fields = ("usuario__username", "arquivo")
 
-@admin.register(CalculoRevisional)
-class CalculoRevisionalAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'whatsapp', 'email', 'criado_em']
-    search_fields = ['nome', 'whatsapp', 'email']
