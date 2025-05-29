@@ -32,7 +32,7 @@ Mensagem: {mensagem}
         send_mail(
             assunto,
             corpo,
-            'no-reply@revisaosegura.com.br',
+            'contato@revisaosegura.com.br',
             ['contato@revisaosegura.com.br'],
             fail_silently=False,
         )

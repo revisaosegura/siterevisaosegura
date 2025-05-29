@@ -132,7 +132,7 @@
     <div class="hero">
         <h1>Elimine Juros Abusivos Agora!</h1>
         <p>Te ajudamos a recuperar valores cobrados indevidamente em financiamentos, empréstimos e contratos.</p>
-    <button onclick="abrirFormulario()">Solicitar Cálculo</button>
+    <button onclick="window.location.href='/calculo/'">Solicitar Cálculo</button>
     </div>
 
     <div class="features">
@@ -197,72 +197,5 @@
         var modal = new bootstrap.Modal(document.getElementById('formModal'));
         modal.show();
     }
-</script>
-
-<!-- Modal com formulário -->
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content p-4">
-      <div class="modal-header">
-        <h5 class="modal-title" id="formModalLabel">Simule sua Revisão</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form method="post" action="/solicitar-calculo/">
-          {% csrf_token %}
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">Nome completo</label>
-              <input type="text" name="nome" class="form-control" placeholder="ex: José da Silva" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Número do Whatsapp</label>
-              <input type="text" name="whatsapp" class="form-control" placeholder="ex: (11) 98888-8888" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Seu Melhor E-mail</label>
-              <input type="email" name="email" class="form-control" placeholder="ex: seu@email.com.br" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Valor do Empréstimo ou Financiamento</label>
-              <input type="text" name="valor_total" class="form-control" placeholder="ex: 50.000,00" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Quantidade Total de Parcelas</label>
-              <input type="number" name="qtd_parcelas" class="form-control" placeholder="ex: 48" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Quantidade de Parcelas Pagas</label>
-              <input type="number" name="parcelas_pagas" class="form-control" placeholder="ex: 17" required>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Valor das Parcelas</label>
-              <input type="text" name="valor_parcela" class="form-control" placeholder="ex: 2.200,00" required>
-            </div>
-            <div class="col-12">
-              <label class="form-label">Mensagem</label>
-              <textarea name="mensagem" class="form-control" rows="3" placeholder="Tenho um financiamento feito no banco Itaú e estou com parcelas atrasadas."></textarea>
-            </div>
-          </div>
-          <div class="text-center mt-4">
-      <button type="submit">Enviar Solicitação</button>
-    </form>
-  </div>
-</div>
-
-<script>
-function abrirFormulario() {
-  document.getElementById('formularioModal').style.display = 'block';
-}
-function fecharFormulario() {
-  document.getElementById('formularioModal').style.display = 'none';
-}
-// Fecha o modal clicando fora do conteúdo
-window.onclick = function(event) {
-  var modal = document.getElementById('formularioModal');
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
 </script>
 {% endif %}
