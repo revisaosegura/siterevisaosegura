@@ -10,13 +10,8 @@ django.setup()
 # Rodar migrações automaticamente no início do deploy
 call_command("migrate")
 
-application = get_wsgi_application()
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'revisao_segura.settings')
-django.setup()
-
-call_command('migrate')
-print("Migrações aplicadas com sucesso!")
+# Garantir que o superusuário padrão exista
+call_command("create_superuser")
 
 application = get_wsgi_application()
 
