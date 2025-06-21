@@ -22,9 +22,12 @@ ALLOWED_HOSTS = ["www.revisaosegura.com.br", "revisaosegura.com.br", "127.0.0.1"
 ROOT_URLCONF = "revisao_segura.urls"
 
 # 🔹 Configuração do Banco de Dados PostgreSQL
+# Utiliza a variável de ambiente DATABASE_URL para permitir ajustes
+# de credenciais e host sem modificar o código fonte.
+DATABASE_URL = config("DATABASE_URL", default="")
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://revisao_user:wReqJqaDOzMkVy8uayvgjywRFblPQOwx@dpg-d0n2itt6ubrc73a1mhkg-a.oregon-postgres.render.com/revisao',
+        DATABASE_URL,
         conn_max_age=600,
         ssl_require=True,
     )
