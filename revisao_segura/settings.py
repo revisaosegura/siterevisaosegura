@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'revisao_segura.usuarios',
     'revisao_segura.boletos',
     'revisao_segura',
+    'app.apps.CommandsConfig',
 ]
 
 # 🔹 Middlewares
