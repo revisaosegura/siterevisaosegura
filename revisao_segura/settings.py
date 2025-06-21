@@ -24,7 +24,9 @@ ROOT_URLCONF = "revisao_segura.urls"
 # 🔹 Configuração do Banco de Dados PostgreSQL
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://revisao_user:wReqJqaDOzMkVy8uayvgjywRFblPQOwx@dpg-d0n2itt6ubrc73a1mhkg-a.oregon-postgres.render.com/revisao'
+        'postgresql://revisao_user:wReqJqaDOzMkVy8uayvgjywRFblPQOwx@dpg-d0n2itt6ubrc73a1mhkg-a.oregon-postgres.render.com/revisao',
+        conn_max_age=600,
+        ssl_require=True,
     )
 }
 
