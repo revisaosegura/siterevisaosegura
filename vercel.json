@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "revisao_segura/wsgi.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "revisao_segura/wsgi.py"
+        }
+    ],
+    "crons": [
+        {
+            "path": "/",
+            "schedule": "*/10 * * * *"
+        }
+    ]
+}
